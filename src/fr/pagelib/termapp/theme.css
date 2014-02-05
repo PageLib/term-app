@@ -1,0 +1,10 @@
+.header-grid {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #bbb;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.header-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+}

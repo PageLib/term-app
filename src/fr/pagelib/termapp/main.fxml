@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="fr.pagelib.termapp.MainController">
+  <children>
+    <VBox prefHeight="400.0" prefWidth="600.0" style="" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <GridPane minHeight="80.0" styleClass="header-grid" visible="true">
+          <children>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backAction" text="Retour" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="2" />
+            <Label fx:id="pageTitleLabel" prefWidth="-1.0" styleClass="header-title" text="Titre de page" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2" />
+            <Label id="usernameLabel" fx:id="userNameLabel" text="Utilisateur" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutAction" text="Logout" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+          </children>
+          <columnConstraints>
+            <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+        </GridPane>
+        <StackPane fx:id="pagesContainer" prefHeight="10000.0" prefWidth="600.0" style="" VBox.vgrow="ALWAYS">
+          <children>
+            <AnchorPane id="homepagePane" fx:id="homePage" prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane id="loginPane" fx:id="loginPage" prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane id="sourceSelectionPane" fx:id="sourcePage" prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane id="documentSelectionPane" fx:id="usbDocumentPage" prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane id="cloudDocumentPane" fx:id="cloudDocumentPage" prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane id="settingsPane" fx:id="jobSettingsPage" prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane id="cartPane" fx:id="cartPage" prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane id="printingPane" fx:id="printingPage" prefHeight="200.0" prefWidth="200.0" />
+          </children>
+        </StackPane>
+      </children>
+    </VBox>
+  </children>
+  <stylesheets>
+    <URL value="@theme.css" />
+  </stylesheets>
+</AnchorPane>
