@@ -1,3 +1,7 @@
+.root {
+    -fx-font-size: 16px;
+}
+
 .header-grid {
     -fx-background-color: #e0e0e0;
     -fx-border-color: #bbb;
@@ -12,4 +16,14 @@
 .button-title {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
+}
+
+.main-button {
+    -fx-padding: 10px 20px 10px 20px;
+}
+
+.ok-button {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-color: green;
 }

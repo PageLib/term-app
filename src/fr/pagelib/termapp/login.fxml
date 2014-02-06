@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="fr.pagelib.termapp.LoginController">
+  <children>
+    <Label styleClass="header-title" text="Connexion" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+    <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="100.0">
+      <children>
+        <Label text="Identifiant :" />
+        <TextField fx:id="usernameField" prefWidth="200.0" text="" />
+        <Label text="Mot de passe :">
+          <VBox.margin>
+            <Insets top="30.0" />
+          </VBox.margin>
+        </Label>
+        <TextField fx:id="passwordField" prefWidth="200.0" />
+        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+          <children>
+            <Button mnemonicParsing="false" onAction="#backAction" styleClass="main-button" text="Retour" />
+            <Button mnemonicParsing="false" onAction="#loginAction" styleClass="ok-button, main-button" text="Connexion" />
+          </children>
+          <VBox.margin>
+            <Insets top="20.0" />
+          </VBox.margin>
+        </HBox>
+      </children>
+    </VBox>
+  </children>
+  <stylesheets>
+    <URL value="@theme.css" />
+  </stylesheets>
+</AnchorPane>

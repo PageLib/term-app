@@ -37,12 +37,17 @@ public class MainController {
         PRINTING
     }
 
+    Page currentPage;
+    Page previousPage;
+
     public void initialize () {
         // Ensures that the global VBox does not allow space for headerGrid when it is hidden
         headerGrid.managedProperty().bind(headerGrid.visibleProperty());
     }
 
-    @FXML public void backAction () {}
+    @FXML public void backAction () {
+        showPage(previousPage);
+    }
 
     @FXML public void logoutAction () {}
 
@@ -59,8 +64,8 @@ public class MainController {
 
         // Show the selected page
         String title = "";
+        previousPage = null;
         boolean showHeader = true;
-        boolean showBack = true;
         boolean showUserData = true;
         switch (page) {
             case HOME:
@@ -72,27 +77,30 @@ public class MainController {
             case LOGIN:
                 loginPage.setVisible(true);
                 title = "Connexion";
-                showUserData = false;
+                showHeader = false;
                 break;
 
             case SOURCE:
                 sourcePage.setVisible(true);
                 title = "Où se trouve votre document ?";
-                showBack = false;
                 break;
 
             case USB_DOCUMENT:
                 usbDocumentPage.setVisible(true);
+                previousPage = Page.SOURCE;
                 title = "Documents sur clé USB";
                 break;
 
             case CLOUD_DOCUMENT:
                 cloudDocumentPage.setVisible(true);
+                previousPage = Page.SOURCE;
                 title = "Documents stockés sur pagelib.fr";
                 break;
 
             case JOB_SETTINGS:
                 jobSettingsPage.setVisible(true);
+                if (currentPage == Page.USB_DOCUMENT || currentPage == Page.CLOUD_DOCUMENT)
+                    previousPage = currentPage;
                 title = "Paramètres d'impression";
                 break;
 
@@ -109,9 +117,11 @@ public class MainController {
         }
 
         headerGrid.setVisible(showHeader);
-        backButton.setVisible(showBack);
+        backButton.setVisible(previousPage != null);
         pageTitleLabel.setText(title);
         userNameLabel.setVisible(showUserData);
         logoutButton.setVisible(showUserData);
+
+        currentPage = page;
     }
 }
