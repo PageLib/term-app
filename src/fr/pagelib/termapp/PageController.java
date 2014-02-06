@@ -3,7 +3,7 @@ package fr.pagelib.termapp;
 /**
  * Base controller class, holds a reference to the application's MainController
  */
-public class PageController {
+public abstract class PageController {
 
     protected MainController mainController;
 

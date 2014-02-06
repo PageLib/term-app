@@ -38,6 +38,7 @@ public class MainController {
     }
 
     public void initialize () {
+        // Ensures that the global VBox does not allow space for headerGrid when it is hidden
         headerGrid.managedProperty().bind(headerGrid.visibleProperty());
     }
 
