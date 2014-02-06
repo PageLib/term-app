@@ -5,10 +5,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 public class MainController {
 
+    @FXML GridPane headerGrid;
     @FXML Button backButton;
     @FXML Label pageTitleLabel;
     @FXML Label userNameLabel;
@@ -35,6 +37,10 @@ public class MainController {
         PRINTING
     }
 
+    public void initialize () {
+        headerGrid.managedProperty().bind(headerGrid.visibleProperty());
+    }
+
     @FXML public void backAction () {}
 
     @FXML public void logoutAction () {}
@@ -52,14 +58,14 @@ public class MainController {
 
         // Show the selected page
         String title = "";
+        boolean showHeader = true;
         boolean showBack = true;
         boolean showUserData = true;
         switch (page) {
             case HOME:
                 homePage.setVisible(true);
                 title = "Bienvenue sur Pagelib";
-                showBack = false;
-                showUserData = false;
+                showHeader = false;
                 break;
 
             case LOGIN:
@@ -97,10 +103,11 @@ public class MainController {
             case PRINTING:
                 printingPage.setVisible(true);
                 title = "Impression en cours ...";
-                showBack = false;
+                showHeader = false;
                 break;
         }
 
+        headerGrid.setVisible(showHeader);
         backButton.setVisible(showBack);
         pageTitleLabel.setText(title);
         userNameLabel.setVisible(showUserData);

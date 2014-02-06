@@ -11,7 +11,7 @@
   <children>
     <VBox prefHeight="400.0" prefWidth="600.0" style="" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <GridPane minHeight="80.0" styleClass="header-grid" visible="true">
+        <GridPane id="headerGridPane" fx:id="headerGrid" minHeight="80.0" styleClass="header-grid" visible="true">
           <children>
             <Button fx:id="backButton" mnemonicParsing="false" onAction="#backAction" text="Retour" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="2" />
             <Label fx:id="pageTitleLabel" prefWidth="-1.0" styleClass="header-title" text="Titre de page" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2" />
