@@ -1,5 +1,8 @@
 package fr.pagelib.termapp;
 
+import fr.pagelib.termapp.wsc.Configuration;
+import fr.pagelib.termapp.wsc.IAM;
+import fr.pagelib.termapp.wsc.Session;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -40,6 +43,9 @@ public class MainController {
     Page currentPage;
     Page previousPage;
 
+    Session currentSession;
+    String currentUserName;
+
     public void initialize () {
         // Ensures that the global VBox does not allow space for headerGrid when it is hidden
         headerGrid.managedProperty().bind(headerGrid.visibleProperty());
@@ -49,7 +55,17 @@ public class MainController {
         showPage(previousPage);
     }
 
-    @FXML public void logoutAction () {}
+    @FXML public void logoutAction () {
+        if (currentSession != null) {
+            // TODO: use a global wsConfig and IAM
+            Configuration wsConfig = new Configuration("http://localhost:5001", "", "", "");
+            IAM iam = new IAM(wsConfig);
+
+            iam.logout(currentSession);
+
+            showPage(Page.HOME);
+        }
+    }
 
     public void showPage (Page page) {
 
@@ -122,6 +138,24 @@ public class MainController {
         userNameLabel.setVisible(showUserData);
         logoutButton.setVisible(showUserData);
 
+        if (currentUserName != null) userNameLabel.setText(currentUserName);
+
         currentPage = page;
+    }
+
+    public Session getCurrentSession() {
+        return currentSession;
+    }
+
+    public void setCurrentSession(Session currentSession) {
+        this.currentSession = currentSession;
+    }
+
+    public String getCurrentUserName() {
+        return currentUserName;
+    }
+
+    public void setCurrentUserName(String currentUserName) {
+        this.currentUserName = currentUserName;
     }
 }

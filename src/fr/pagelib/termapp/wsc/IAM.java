@@ -52,4 +52,17 @@ public class IAM {
             return null;
         }
     }
+
+    public void logout (Session session) {
+        try {
+            String url = this.config.getIamEndpoint() + String.format("/v1/sessions/%s/logout", session.getSessionID());
+            Request.Post(url).execute();
+        }
+        catch (HttpResponseException e) {
+            System.out.println("Unable to properly log out.");
+        }
+        catch (IOException e) {
+            System.out.println("Logout / IOException: " + e.getMessage());
+        }
+    }
 }

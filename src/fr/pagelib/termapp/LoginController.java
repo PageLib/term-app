@@ -40,6 +40,11 @@ public class LoginController extends PageController {
         try {
             Session session = iam.login(username, hash);
             System.out.println(String.format("Session opened (ID=%s)", session.getSessionID()));
+
+            // TODO: retrieve the user's real name
+            mainController.setCurrentUserName("<user name>");
+            mainController.setCurrentSession(session);
+
             mainController.showPage(MainController.Page.SOURCE);
         }
         catch (LoginException e) {
