@@ -26,6 +26,7 @@ public class Main extends Application {
         // Load and set up pages
         addPage(this.mainController.homePage, "home.fxml");
         addPage(this.mainController.loginPage, "login.fxml");
+        addPage(this.mainController.sourcePage, "source.fxml");
 
         this.mainController.showPage(MainController.Page.HOME);
     }
