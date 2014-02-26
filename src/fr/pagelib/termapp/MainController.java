@@ -67,6 +67,8 @@ public class MainController {
 
             iam.logout(currentSession);
 
+            setCurrentSession(null);
+            setCurrentUserName("");
             showPage(Page.HOME);
         }
     }
