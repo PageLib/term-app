@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane fx:id="" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.pagelib.termapp.SourceController">
-<children><HBox id="" prefHeight="100.0" prefWidth="200.0" styleClass="main-button" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" >
+<children><HBox id="" prefHeight="100.0" prefWidth="200.0" styleClass="main-button" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 <children><VBox prefHeight="500.0" prefWidth="432.0">
-<children><Button mnemonicParsing="false">
-<graphic><VBox prefHeight="494.0" prefWidth="416.0">
+<children><Button mnemonicParsing="false" onKeyPressed="#usbDocumentAction">
+<graphic><VBox onMouseClicked="#usbDocumentAction" prefHeight="494.0" prefWidth="416.0">
 <children><Label id="" styleClass="button-title" text="Clé USB" VBox.vgrow="ALWAYS" /><Label text="Pour ouvrir un document depuis une clé USB" />
 </children></VBox>
 </graphic>
 <VBox.margin>
 <Insets left="10.0" top="10.0" />
-</VBox.margin></Button><Button mnemonicParsing="false">
+</VBox.margin></Button><Button mnemonicParsing="false" onMouseClicked="#cloudDocumentAction">
 <graphic><VBox prefHeight="494.0" prefWidth="416.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 <children>
 <Label id="" styleClass="button-title" text="Espace PageLib" VBox.vgrow="ALWAYS" />
