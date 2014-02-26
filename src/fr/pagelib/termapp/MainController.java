@@ -31,6 +31,7 @@ public class MainController {
 
     public HomeController homeController;
     public LoginController loginController;
+    public SourceController sourceController;
 
     enum Page {  // used for showPage() method
         HOME,
@@ -170,6 +171,9 @@ public class MainController {
                 break;
             case LOGIN:
                 this.loginController = (LoginController) controller;
+                break;
+            case SOURCE:
+                this.sourceController = (SourceController) controller;
                 break;
         }
     }
