@@ -29,6 +29,9 @@ public class MainController {
     @FXML AnchorPane cartPage;
     @FXML AnchorPane printingPage;
 
+    public HomeController homeController;
+    public LoginController loginController;
+
     enum Page {  // used for showPage() method
         HOME,
         LOGIN,
@@ -94,6 +97,7 @@ public class MainController {
                 loginPage.setVisible(true);
                 title = "Connexion";
                 showHeader = false;
+                loginController.reset();
                 break;
 
             case SOURCE:
@@ -157,5 +161,16 @@ public class MainController {
 
     public void setCurrentUserName(String currentUserName) {
         this.currentUserName = currentUserName;
+    }
+
+    public void setPageController(Page page, PageController controller) {
+        switch (page) {
+            case HOME:
+                this.homeController = (HomeController) controller;
+                break;
+            case LOGIN:
+                this.loginController = (LoginController) controller;
+                break;
+        }
     }
 }

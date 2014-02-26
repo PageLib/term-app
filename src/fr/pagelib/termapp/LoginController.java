@@ -12,6 +12,11 @@ public class LoginController extends PageController {
     @FXML TextField usernameField;
     @FXML TextField passwordField;
 
+    public void reset () {
+        usernameField.setText("");
+        passwordField.setText("");
+    }
+
     @FXML
     public void backAction () {
         mainController.showPage(MainController.Page.HOME);
