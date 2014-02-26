@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import fr.pagelib.termapp.wsc.*;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class LoginController extends PageController {
 
@@ -27,7 +28,8 @@ public class LoginController extends PageController {
             MessageDigest md = MessageDigest.getInstance("SHA1");
             md.update(password.getBytes());
             hash = bytesToHex(md.digest());
-        }catch(Exception e){
+        }
+        catch(NoSuchAlgorithmException e){
             System.out.println("Exception: "+e);
         }
 
