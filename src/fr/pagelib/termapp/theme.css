@@ -31,3 +31,11 @@
 .error-label {
     -fx-text-fill: red;
 }
+
+.hint-label {
+    -fx-text-fill: #999;
+}
+
+.title-label {
+    -fx-font-size: 20px;
+}

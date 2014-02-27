@@ -33,6 +33,7 @@ public class MainController {
     public HomeController homeController;
     public LoginController loginController;
     public SourceController sourceController;
+    public JobSettingsController jobSettingsController;
 
     enum Page {  // used for showPage() method
         HOME,
@@ -126,9 +127,10 @@ public class MainController {
 
             case JOB_SETTINGS:
                 jobSettingsPage.setVisible(true);
-                if (currentPage == Page.USB_DOCUMENT || currentPage == Page.CLOUD_DOCUMENT)
+                // (TODO: uncomment)   if (currentPage == Page.USB_DOCUMENT || currentPage == Page.CLOUD_DOCUMENT)
                     previousPage = currentPage;
                 title = "Paramètres d'impression";
+                jobSettingsController.reset();
                 break;
 
             case CART:
@@ -196,6 +198,9 @@ public class MainController {
                 break;
             case SOURCE:
                 this.sourceController = (SourceController) controller;
+                break;
+            case JOB_SETTINGS:
+                this.jobSettingsController = (JobSettingsController) controller;
                 break;
         }
     }
