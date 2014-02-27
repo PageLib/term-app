@@ -33,6 +33,7 @@ public class MainController {
     public HomeController homeController;
     public LoginController loginController;
     public SourceController sourceController;
+    public CloudDocumentController cloudDocumentController;
 
     enum Page {  // used for showPage() method
         HOME,
@@ -119,6 +120,7 @@ public class MainController {
                 break;
 
             case CLOUD_DOCUMENT:
+                cloudDocumentController.initialize();
                 cloudDocumentPage.setVisible(true);
                 previousPage = Page.SOURCE;
                 title = "Documents stockés sur pagelib.fr";
@@ -196,6 +198,9 @@ public class MainController {
                 break;
             case SOURCE:
                 this.sourceController = (SourceController) controller;
+                break;
+            case CLOUD_DOCUMENT:
+                this.cloudDocumentController = (CloudDocumentController) controller;
                 break;
         }
     }
