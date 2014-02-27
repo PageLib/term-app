@@ -158,6 +158,14 @@ public class MainController {
         currentPage = page;
     }
 
+    public Configuration getWsConfig() {
+        return wsConfig;
+    }
+
+    public void setWsConfig(Configuration wsConfig) {
+        this.wsConfig = wsConfig;
+    }
+
     public Session getCurrentSession() {
         return currentSession;
     }

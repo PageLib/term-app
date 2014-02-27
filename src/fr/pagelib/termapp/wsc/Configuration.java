@@ -12,36 +12,24 @@ public class Configuration {
     private String docsEndpoint;
     private String settingsEndpoint;
 
-    public static Configuration ConfigurationBuilder(String configPath) throws IOException {
-        String fileContent = "";
-        String path = new File(".").getAbsolutePath();
-        if (path.length() > 1) {
-            path = path.substring(0, path.length()-1);
-        }
-        String absolutePath = path  + configPath;
-        System.out.println(absolutePath);
-        BufferedReader br = new BufferedReader(new FileReader(absolutePath));
-        try {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
+    public static Configuration buildFromFile(String configPath) throws IOException {
 
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-            fileContent = sb.toString();
-        } finally {
-            br.close();
-        }
-        JsonStructure rvJson = Json.createReader(new StringReader(fileContent)).read();
+        // Compute the absolute path corresponding to configPath (relative to the current working directory)
+        String cwdPath = new File(".").getAbsolutePath();
+        if (cwdPath.length() > 1) cwdPath = cwdPath.substring(0, cwdPath.length() - 1);
+        String absolutePath = cwdPath + configPath;
+
+        // Parse JSON and build the Configuration
+        JsonStructure rvJson = Json.createReader(new FileReader(absolutePath)).read();
         JsonObject root = (JsonObject) rvJson;
-        String iamEndpoint = root.getString("iamEndpoint");
-        String invoicingEndpoint = root.getString("invoicingEndpoint");
-        String docsEndpoint = root.getString("docsEndpoint");
-        String settingsEndpoint = root.getString("settingsEndpoint");
-        return new Configuration(iamEndpoint, invoicingEndpoint, docsEndpoint, settingsEndpoint);
+
+        return new Configuration(
+                root.getString("iamEndpoint"),
+                root.getString("invoicingEndpoint"),
+                root.getString("docsEndpoint"),
+                root.getString("settingsEndpoint"));
     }
+
     public Configuration (String iamEndpoint, String invoicingEndpoint, String docsEndpoint, String settingsEndpoint) {
         this.iamEndpoint = iamEndpoint;
         this.invoicingEndpoint = invoicingEndpoint;

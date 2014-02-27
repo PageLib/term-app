@@ -2,11 +2,13 @@ package fr.pagelib.termapp;
 
 import fr.pagelib.termapp.wsc.Configuration;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main extends Application {
@@ -16,14 +18,30 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception
     {
+        Configuration wsConfig = null;
+
+        try {
+            // TODO: allow the file name to be set via a CLI argument or an environment variable
+            wsConfig = Configuration.buildFromFile("config.json");
+        }
+        catch (FileNotFoundException e) {
+            System.err.println("Unable to find configuration file.");
+            Platform.exit();
+        }
+        catch (IOException e) {
+            System.err.println("Unexpected IOException while reading configuration file: " + e);
+            e.printStackTrace();
+            Platform.exit();
+        }
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
         AnchorPane root = (AnchorPane) loader.load();
         primaryStage.setTitle("PageLib terminal app");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
-        this.mainController = loader.getController();
 
-        this.mainController.wsConfig = Configuration.ConfigurationBuilder("config.json");
+        this.mainController = loader.getController();
+        this.mainController.setWsConfig(wsConfig);
 
         // Load and set up pages
         addPage(this.mainController.homePage, MainController.Page.HOME, "home.fxml");
