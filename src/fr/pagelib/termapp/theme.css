@@ -27,3 +27,7 @@
     -fx-font-weight: bold;
     -fx-background-color: green;
 }
+
+.error-label {
+    -fx-text-fill: red;
+}

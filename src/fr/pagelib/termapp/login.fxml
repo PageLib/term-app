@@ -6,18 +6,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.pagelib.termapp.LoginController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="fr.pagelib.termapp.LoginController">
   <children>
     <Label styleClass="header-title" text="Connexion" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
     <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="100.0">
       <children>
         <Label text="Identifiant :" />
-        <TextField fx:id="usernameField" prefWidth="200.0" text="" />
+        <TextField fx:id="usernameField" minHeight="30.0" onKeyTyped="#hideErrorLabel" prefWidth="200.0" text="" />
         <Label text="Mot de passe :">
           <VBox.margin>
             <Insets top="30.0" />
           </VBox.margin>
-        </Label><PasswordField fx:id="passwordField" />
+        </Label>
+        <PasswordField fx:id="passwordField" minHeight="30.0" onKeyTyped="#hideErrorLabel" />
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
           <children>
             <Button mnemonicParsing="false" onAction="#backAction" styleClass="main-button" text="Retour" />
@@ -27,6 +28,8 @@
             <Insets top="20.0" />
           </VBox.margin>
         </HBox>
+        <Label fx:id="errorLabel" styleClass="error-label" text="Identifiant ou mot de passe incorrect." />
+        <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
       </children>
     </VBox>
   </children>

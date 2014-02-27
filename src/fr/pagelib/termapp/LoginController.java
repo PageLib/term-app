@@ -2,6 +2,8 @@ package fr.pagelib.termapp;
 
 import fr.pagelib.termapp.wsc.exc.LoginException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import fr.pagelib.termapp.wsc.*;
 import java.security.MessageDigest;
@@ -11,10 +13,12 @@ public class LoginController extends PageController {
 
     @FXML TextField usernameField;
     @FXML TextField passwordField;
+    @FXML Label errorLabel;
 
     public void reset () {
         usernameField.setText("");
         passwordField.setText("");
+        errorLabel.setVisible(false);
     }
 
     @FXML
@@ -53,8 +57,15 @@ public class LoginController extends PageController {
             mainController.showPage(MainController.Page.SOURCE);
         }
         catch (LoginException e) {
+            errorLabel.setVisible(true);
+            passwordField.setText("");
             System.out.println("Login exception");
         }
+    }
+
+    @FXML
+    public void hideErrorLabel() {
+        errorLabel.setVisible(false);
     }
 
     public static String bytesToHex(byte[] b) {
