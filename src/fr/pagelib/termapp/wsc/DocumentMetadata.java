@@ -6,13 +6,12 @@ public class DocumentMetadata {
 
     private String name;
     private String date;
-
-
     private String id;
 
-    public DocumentMetadata(String name, String date) {
+    public DocumentMetadata(String name, String date, String id) {
         this.name = name;
         this.date = date;
+        this.id = id;
     }
 
     public String getDate() {
