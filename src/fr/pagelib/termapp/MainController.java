@@ -1,6 +1,7 @@
 package fr.pagelib.termapp;
 
 import fr.pagelib.termapp.wsc.Configuration;
+import fr.pagelib.termapp.wsc.DocumentMetadata;
 import fr.pagelib.termapp.wsc.IAM;
 import fr.pagelib.termapp.wsc.Session;
 import javafx.fxml.FXML;
@@ -49,6 +50,9 @@ public class MainController {
 
     Session currentSession;
     String currentUserName;
+
+    String currentDocumentPath;
+    DocumentMetadata currentDocumentMetadata;
 
     public void initialize () {
         // Ensures that the global VBox does not allow space for headerGrid when it is hidden
@@ -164,6 +168,22 @@ public class MainController {
 
     public void setCurrentUserName(String currentUserName) {
         this.currentUserName = currentUserName;
+    }
+
+    public String getCurrentDocumentPath() {
+        return currentDocumentPath;
+    }
+
+    public void setCurrentDocumentPath(String currentDocumentPath) {
+        this.currentDocumentPath = currentDocumentPath;
+    }
+
+    public DocumentMetadata getCurrentDocumentMetadata() {
+        return currentDocumentMetadata;
+    }
+
+    public void setCurrentDocumentMetadata(DocumentMetadata currentDocumentMetadata) {
+        this.currentDocumentMetadata = currentDocumentMetadata;
     }
 
     public void setPageController(Page page, PageController controller) {
