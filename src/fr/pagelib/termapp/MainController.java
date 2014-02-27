@@ -206,6 +206,9 @@ public class MainController {
             case CLOUD_DOCUMENT:
                 this.cloudDocumentController = (CloudDocumentController) controller;
                 break;
+            case JOB_SETTINGS:
+                this.jobSettingsController = (JobSettingsController) controller;
+                break;
         }
     }
 }
