@@ -1,5 +1,6 @@
 package fr.pagelib.termapp;
 
+import fr.pagelib.termapp.wsc.Configuration;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,8 +21,9 @@ public class Main extends Application {
         primaryStage.setTitle("PageLib terminal app");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
-
         this.mainController = loader.getController();
+
+        this.mainController.wsConfig = new Configuration("http://localhost:5001", "", "http://localhost:5002", "");
 
         // Load and set up pages
         addPage(this.mainController.homePage, MainController.Page.HOME, "home.fxml");
@@ -30,7 +32,7 @@ public class Main extends Application {
         addPage(this.mainController.cloudDocumentPage, MainController.Page.CLOUD_DOCUMENT, "cloudDocument.fxml");
 
         this.mainController.showPage(MainController.Page.HOME);
-    }
+   }
 
     private PageController addPage(AnchorPane containerPage, MainController.Page page, String fxmlFileName)
             throws IOException

@@ -7,6 +7,9 @@ public class DocumentMetadata {
     private String name;
     private String date;
 
+
+    private String id;
+
     public DocumentMetadata(String name, String date) {
         this.name = name;
         this.date = date;
@@ -26,5 +29,13 @@ public class DocumentMetadata {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

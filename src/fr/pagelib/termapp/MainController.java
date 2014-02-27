@@ -35,6 +35,8 @@ public class MainController {
     public SourceController sourceController;
     public CloudDocumentController cloudDocumentController;
 
+    public Configuration wsConfig;
+
     enum Page {  // used for showPage() method
         HOME,
         LOGIN,
@@ -120,7 +122,7 @@ public class MainController {
                 break;
 
             case CLOUD_DOCUMENT:
-                cloudDocumentController.initialize();
+                cloudDocumentController.init();
                 cloudDocumentPage.setVisible(true);
                 previousPage = Page.SOURCE;
                 title = "Documents stockés sur pagelib.fr";

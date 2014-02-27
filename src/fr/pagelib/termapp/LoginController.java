@@ -43,8 +43,7 @@ public class LoginController extends PageController {
         }
 
         // TODO: store WS configuration and session in MainController
-        Configuration wsConfig = new Configuration("http://localhost:5001", "", "", "");
-        IAM iam = new IAM(wsConfig);
+        IAM iam = new IAM(mainController.wsConfig);
 
         try {
             Session session = iam.login(username, hash);
