@@ -68,8 +68,7 @@ public class MainController {
 
     @FXML public void logoutAction () {
         if (currentSession != null) {
-            // TODO: use a global wsConfig and IAM
-            Configuration wsConfig = new Configuration("http://localhost:5001", "", "", "");
+            // TODO: use a global IAM
             IAM iam = new IAM(wsConfig);
 
             iam.logout(currentSession);
@@ -188,6 +187,14 @@ public class MainController {
 
     public void setCurrentDocumentMetadata(DocumentMetadata currentDocumentMetadata) {
         this.currentDocumentMetadata = currentDocumentMetadata;
+    }
+
+    public Configuration getWsConfig() {
+        return wsConfig;
+    }
+
+    public void setWsConfig(Configuration wsConfig) {
+        this.wsConfig = wsConfig;
     }
 
     public void setPageController(Page page, PageController controller) {

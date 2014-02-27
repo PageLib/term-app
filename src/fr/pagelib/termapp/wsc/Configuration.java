@@ -11,15 +11,18 @@ public class Configuration {
     private String invoicingEndpoint;
     private String docsEndpoint;
     private String settingsEndpoint;
+    private String pdfPath;
 
-    public static Configuration ConfigurationBuilder(String configPath) throws IOException {
-        String fileContent = "";
+    public static Configuration Builder(String configPath) throws IOException {
+        // Generate absolute path
         String path = new File(".").getAbsolutePath();
         if (path.length() > 1) {
             path = path.substring(0, path.length()-1);
         }
         String absolutePath = path  + configPath;
-        System.out.println(absolutePath);
+        String fileContent = "";
+
+        // Read the json file
         BufferedReader br = new BufferedReader(new FileReader(absolutePath));
         try {
             StringBuilder sb = new StringBuilder();
@@ -34,19 +37,30 @@ public class Configuration {
         } finally {
             br.close();
         }
+
+        //
         JsonStructure rvJson = Json.createReader(new StringReader(fileContent)).read();
         JsonObject root = (JsonObject) rvJson;
-        String iamEndpoint = root.getString("iamEndpoint");
-        String invoicingEndpoint = root.getString("invoicingEndpoint");
-        String docsEndpoint = root.getString("docsEndpoint");
-        String settingsEndpoint = root.getString("settingsEndpoint");
-        return new Configuration(iamEndpoint, invoicingEndpoint, docsEndpoint, settingsEndpoint);
+
+        // Fill the configuration
+        Configuration configuration = new Configuration();
+        configuration.iamEndpoint = root.getString("iamEndpoint");
+        configuration.invoicingEndpoint = root.getString("invoicingEndpoint");
+        configuration.docsEndpoint = root.getString("docsEndpoint");
+        configuration.settingsEndpoint = root.getString("settingsEndpoint");
+        configuration.pdfPath = root.getString("pdfPath");
+        return configuration;
     }
-    public Configuration (String iamEndpoint, String invoicingEndpoint, String docsEndpoint, String settingsEndpoint) {
+
+    public Configuration () {
+    }
+
+   public Configuration (String iamEndpoint, String invoicingEndpoint, String docsEndpoint, String settingsEndpoint, String pdfPath) {
         this.iamEndpoint = iamEndpoint;
         this.invoicingEndpoint = invoicingEndpoint;
         this.docsEndpoint = docsEndpoint;
         this.settingsEndpoint = settingsEndpoint;
+        this.pdfPath = pdfPath;
     }
 
     public String getIamEndpoint() {
@@ -63,5 +77,13 @@ public class Configuration {
 
     public String getSettingsEndpoint() {
         return settingsEndpoint;
+    }
+
+    public String getPdfPath() {
+        return pdfPath;
+    }
+
+    public void setPdfPath(String pdfPath) {
+        this.pdfPath = pdfPath;
     }
 }

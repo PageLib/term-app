@@ -23,7 +23,7 @@ public class Main extends Application {
         primaryStage.show();
         this.mainController = loader.getController();
 
-        this.mainController.wsConfig = Configuration.ConfigurationBuilder("config.json");
+        this.mainController.setWsConfig(Configuration.Builder("config.json"));
 
         // Load and set up pages
         addPage(this.mainController.homePage, MainController.Page.HOME, "home.fxml");
