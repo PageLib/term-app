@@ -39,3 +39,20 @@
 .title-label {
     -fx-font-size: 20px;
 }
+
+.doc-preview-pane {
+    -fx-background-color: #666;
+}
+
+.doc-preview-pane .button {
+    -fx-background-color: #444;
+    -fx-text-fill: #eee;
+    -fx-border-radius: 1px;
+    -fx-border-width: 1px;
+    -fx-border-color: #aaa;
+}
+
+.doc-preview-pane .label {
+    -fx-text-fill: #bbb;
+    -fx-alignment: center;
+}

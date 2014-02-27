@@ -4,15 +4,27 @@
 <?import java.net.*?>
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="fr.pagelib.termapp.JobSettingsController">
   <children>
-    <HBox prefHeight="500.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <HBox prefHeight="500.0" prefWidth="700.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <AnchorPane id="pdfPreviewPane" fx:id="pdfPane" prefHeight="200.0" prefWidth="350.0" />
-        <GridPane HBox.hgrow="ALWAYS">
+        <AnchorPane id="pdfPreviewPane" fx:id="pdfPane" prefHeight="200.0" prefWidth="350.0" style="" styleClass="doc-preview-pane" HBox.hgrow="ALWAYS">
+          <children>
+            <ImageView fx:id="pdfImageView" fitHeight="450.0" fitWidth="330.0" pickOnBounds="true" preserveRatio="true" style="" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+            <HBox maxWidth="30.0" prefHeight="30.0" prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+              <children>
+                <Button fx:id="previousPageButton" minWidth="140.0" mnemonicParsing="false" onAction="#previousPage" text="Previous page" HBox.hgrow="NEVER" />
+                <Label fx:id="currentPageLabel" prefWidth="71.0" text="Label" HBox.hgrow="ALWAYS" />
+                <Button fx:id="nextPageButton" minWidth="125.0" mnemonicParsing="false" onAction="#nextPage" text="Next page" HBox.hgrow="NEVER" />
+              </children>
+            </HBox>
+          </children>
+        </AnchorPane>
+        <GridPane prefWidth="330.0" HBox.hgrow="NEVER">
           <children>
             <Label id="fileNameLabel" fx:id="documentNameLabel" styleClass="title-label" text="&lt;document name&gt;" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
             <Label text="Pages à imprimer :" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
@@ -27,8 +39,8 @@
             <Button fx:id="okButton" minWidth="130.0" mnemonicParsing="false" styleClass="ok-button, main-button" text="OK" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" />
           </children>
           <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="180.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
           </columnConstraints>
           <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
