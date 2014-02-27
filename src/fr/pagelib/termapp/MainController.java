@@ -34,6 +34,9 @@ public class MainController {
     public LoginController loginController;
     public SourceController sourceController;
     public JobSettingsController jobSettingsController;
+    public CloudDocumentController cloudDocumentController;
+
+    public Configuration wsConfig;
 
     enum Page {  // used for showPage() method
         HOME,
@@ -120,6 +123,7 @@ public class MainController {
                 break;
 
             case CLOUD_DOCUMENT:
+                cloudDocumentController.init();
                 cloudDocumentPage.setVisible(true);
                 previousPage = Page.SOURCE;
                 title = "Documents stockés sur pagelib.fr";
@@ -127,7 +131,7 @@ public class MainController {
 
             case JOB_SETTINGS:
                 jobSettingsPage.setVisible(true);
-                // (TODO: uncomment)   if (currentPage == Page.USB_DOCUMENT || currentPage == Page.CLOUD_DOCUMENT)
+                if (currentPage == Page.USB_DOCUMENT || currentPage == Page.CLOUD_DOCUMENT)
                     previousPage = currentPage;
                 title = "Paramètres d'impression";
                 jobSettingsController.reset();
@@ -199,8 +203,8 @@ public class MainController {
             case SOURCE:
                 this.sourceController = (SourceController) controller;
                 break;
-            case JOB_SETTINGS:
-                this.jobSettingsController = (JobSettingsController) controller;
+            case CLOUD_DOCUMENT:
+                this.cloudDocumentController = (CloudDocumentController) controller;
                 break;
         }
     }

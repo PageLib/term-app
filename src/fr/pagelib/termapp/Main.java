@@ -1,5 +1,6 @@
 package fr.pagelib.termapp;
 
+import fr.pagelib.termapp.wsc.Configuration;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,10 +24,13 @@ public class Main extends Application {
 
         this.mainController = loader.getController();
 
+        this.mainController.wsConfig = Configuration.ConfigurationBuilder("config.json");
+
         // Load and set up pages
         addPage(this.mainController.homePage, MainController.Page.HOME, "home.fxml");
         addPage(this.mainController.loginPage, MainController.Page.LOGIN, "login.fxml");
         addPage(this.mainController.sourcePage, MainController.Page.SOURCE, "source.fxml");
+        addPage(this.mainController.cloudDocumentPage, MainController.Page.CLOUD_DOCUMENT, "cloudDocument.fxml");
         addPage(this.mainController.jobSettingsPage, MainController.Page.JOB_SETTINGS, "job_settings.fxml");
 
         this.mainController.showPage(MainController.Page.HOME);
