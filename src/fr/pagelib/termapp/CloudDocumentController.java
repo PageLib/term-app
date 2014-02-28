@@ -59,13 +59,12 @@ public class CloudDocumentController extends PageController {
                             String url = mainController.wsConfig.getDocsEndpoint() + "/v1/docs/"
                                     + newValue.getId() + "/raw";
                             byte[] rv = Request.Get(url).execute().returnContent().asBytes();
-                            String path = ".pdf";  //TODO
-                            FileOutputStream fos = new FileOutputStream("D:/test.pdf");
+                            String path =  mainController.getWsConfig().getPdfPath() + newValue.getId() +".pdf";  //TODO
+                            FileOutputStream fos = new FileOutputStream(path);
                             fos.write(rv);
                             fos.close();
                             mainController.setCurrentDocumentMetadata(newValue);
 
-                            System.out.println(mainController.currentDocumentMetadata.getName());
                             mainController.showPage(MainController.Page.JOB_SETTINGS);
 
                         } catch (IOException e) {

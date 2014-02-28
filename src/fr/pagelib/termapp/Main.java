@@ -41,7 +41,7 @@ public class Main extends Application {
         primaryStage.show();
 
         this.mainController = loader.getController();
-        this.mainController.setWsConfig(wsConfig);
+        this.mainController.setWsConfig(Configuration.buildFromFile("config.json"));
 
         // Load and set up pages
         addPage(this.mainController.homePage, MainController.Page.HOME, "home.fxml");
