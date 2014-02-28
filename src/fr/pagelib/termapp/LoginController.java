@@ -42,11 +42,8 @@ public class LoginController extends PageController {
             System.out.println("Exception: "+e);
         }
 
-        // TODO: store WS configuration and session in MainController
-        IAM iam = new IAM(mainController.getWsConfig());
-
         try {
-            Session session = iam.login(username, hash);
+            Session session = mainController.getIam().login(username, hash);
             System.out.println(String.format("Session opened (ID=%s)", session.getSessionID()));
 
             // TODO: retrieve the user's real name

@@ -36,6 +36,7 @@ public class MainController {
     public CloudDocumentController cloudDocumentController;
 
     public Configuration wsConfig;
+    private IAM iam;
 
     enum Page {  // used for showPage() method
         HOME,
@@ -68,9 +69,6 @@ public class MainController {
 
     @FXML public void logoutAction () {
         if (currentSession != null) {
-            // TODO: use a global IAM
-            IAM iam = new IAM(wsConfig);
-
             iam.logout(currentSession);
 
             setCurrentSession(null);
@@ -193,10 +191,15 @@ public class MainController {
         return wsConfig;
     }
 
+    //  Set the
     public void setWsConfig(Configuration wsConfig) {
         this.wsConfig = wsConfig;
+        iam = new IAM(this.getWsConfig());
     }
 
+    public IAM getIam() {
+        return iam;
+    }
     public void setPageController(Page page, PageController controller) {
         switch (page) {
             case HOME:
