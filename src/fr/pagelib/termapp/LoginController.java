@@ -50,7 +50,7 @@ public class LoginController extends PageController {
             System.out.println(String.format("Session opened (ID=%s)", session.getSessionID()));
 
             // TODO: retrieve the user's real name
-            mainController.setCurrentUserName("<user name>");
+            mainController.setCurrentUserName(username);
             mainController.setCurrentSession(session);
 
             mainController.showPage(MainController.Page.SOURCE);
