@@ -1,7 +1,7 @@
 package fr.pagelib.termapp;
 
-
 import fr.pagelib.termapp.wsc.DocumentMetadata;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,16 +13,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.*;
-import org.apache.http.entity.ContentType;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.json.JsonStructure;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
-import java.lang.reflect.InvocationTargetException;
 
 public class CloudDocumentController extends PageController {
 
@@ -32,18 +30,11 @@ public class CloudDocumentController extends PageController {
 
     private ObservableList<DocumentMetadata> docList = FXCollections.observableArrayList();
 
-    public CloudDocumentController(){
-
-    }
-
     @FXML
     public void initialize() {
-        nameColumn.setCellValueFactory(
-                new PropertyValueFactory<DocumentMetadata, String>("name")
-        );
-        dateColumn.setCellValueFactory(
-                new PropertyValueFactory<DocumentMetadata, String>("date")
-        );
+
+        nameColumn.setCellValueFactory(new PropertyValueFactory<DocumentMetadata, String>("name"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<DocumentMetadata, String>("date"));
         table.setItems(docList);
 
         table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DocumentMetadata>() {
@@ -51,58 +42,59 @@ public class CloudDocumentController extends PageController {
             @Override
             public void changed(ObservableValue<? extends DocumentMetadata> observable,
                                 DocumentMetadata oldValue, DocumentMetadata newValue) {
-                    // Le if permet d'éviter un bug lors du reset de la liste si
-                    // on retourne en arrière et que la liste est vidée.
-                    if(newValue != null){
 
-                        try {
-                            String url = mainController.wsConfig.getDocsEndpoint() + "/v1/docs/"
-                                    + newValue.getId() + "/raw";
-                            byte[] rv = Request.Get(url).execute().returnContent().asBytes();
-                            String path =  mainController.getWsConfig().getPdfPath() + newValue.getId() +".pdf";  //TODO
-                            FileOutputStream fos = new FileOutputStream(path);
-                            fos.write(rv);
-                            fos.close();
-                            mainController.setCurrentDocumentMetadata(newValue);
+                // newValue may be null when the list is cleared (in that case do not try to download the document)
+                if (newValue != null) {
+                    try {
+                        // Download the file contents
+                        String url = String.format("%s/v1/docs/%s/raw",
+                                mainController.wsConfig.getDocsEndpoint(), newValue.getId());
+                        byte[] rv = Request.Get(url).execute().returnContent().asBytes();
 
-                            mainController.showPage(MainController.Page.JOB_SETTINGS);
+                        // Store them into a temporary file
+                        String path =  mainController.getWsConfig().getPdfPath()
+                                + File.separator + newValue.getId() + ".pdf";
+                        FileOutputStream fos = new FileOutputStream(path);
+                        fos.write(rv);
+                        fos.close();
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        mainController.setCurrentDocumentMetadata(newValue);
+                        mainController.showPage(MainController.Page.JOB_SETTINGS);
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
-            });
+            }
+        });
     }
-
 
     public void init() {
         // Update the list content from the document service
         docList.clear();
-        try {
 
-            String url = mainController.wsConfig.getDocsEndpoint() + "/v1/docs?user_id="
-                    + mainController.currentSession.getUserID();
+        try {
+            String url = String.format("%s/v1/docs?user_id=%s",
+                    mainController.wsConfig.getDocsEndpoint(), mainController.currentSession.getUserID());
             String rv = Request.Get(url).execute().returnContent().asString();
-            JsonStructure rvJson = Json.createReader(new StringReader(rv)).read();
-            JsonObject root = (JsonObject) rvJson;
+
+            JsonObject root = (JsonObject) Json.createReader(new StringReader(rv)).read();
             JsonArray documents = root.getJsonArray("documents");
 
-            for(int i = 0 ; i < documents.size() ; i++){
+            for (int i = 0; i < documents.size(); i++) {
                 JsonObject document = documents.getJsonObject(i);
-                String id = document.getString("id");
 
-                // TODO?? Gérer les noms nulls
+                String id = document.getString("id");
                 String name = document.getString("name");
 
                 docList.add(new DocumentMetadata(name, "1 jour", id));
             }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }
+        catch (ClientProtocolException e) {
             e.printStackTrace();
         }
-
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 }
