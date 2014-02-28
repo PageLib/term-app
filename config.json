@@ -3,5 +3,5 @@
     "invoicingEndpoint": "",
     "docsEndpoint": "http://localhost:5002",
     "settingsEndpoint": "",
-    "pdfPath": "D:/"
+    "pdfPath": "/Users/raphael/Projects/pagelib/term-app/tmp"
 }
