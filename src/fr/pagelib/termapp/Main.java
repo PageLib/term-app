@@ -48,6 +48,7 @@ public class Main extends Application {
         addPage(this.mainController.loginPage, MainController.Page.LOGIN, "login.fxml");
         addPage(this.mainController.sourcePage, MainController.Page.SOURCE, "source.fxml");
         addPage(this.mainController.cloudDocumentPage, MainController.Page.CLOUD_DOCUMENT, "cloudDocument.fxml");
+        addPage(this.mainController.usbDocumentPage, MainController.Page.USB_DOCUMENT, "usbDocument.fxml");
 
         this.mainController.showPage(MainController.Page.HOME);
    }

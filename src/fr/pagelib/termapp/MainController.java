@@ -34,6 +34,7 @@ public class MainController {
     public LoginController loginController;
     public SourceController sourceController;
     public CloudDocumentController cloudDocumentController;
+    public UsbDocumentController usbDocumentController;
 
     public Configuration wsConfig;
     private IAM iam;
@@ -203,16 +204,19 @@ public class MainController {
     public void setPageController(Page page, PageController controller) {
         switch (page) {
             case HOME:
-                this.homeController = (HomeController) controller;
+                homeController = (HomeController) controller;
                 break;
             case LOGIN:
-                this.loginController = (LoginController) controller;
+                loginController = (LoginController) controller;
                 break;
             case SOURCE:
-                this.sourceController = (SourceController) controller;
+                sourceController = (SourceController) controller;
                 break;
             case CLOUD_DOCUMENT:
-                this.cloudDocumentController = (CloudDocumentController) controller;
+                cloudDocumentController = (CloudDocumentController) controller;
+                break;
+            case USB_DOCUMENT:
+                usbDocumentController = (UsbDocumentController) controller;
                 break;
         }
     }

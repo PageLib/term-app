@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="fr.pagelib.termapp.UsbDocumentController">
+<children><TableView fx:id="table" layoutX="22.0" layoutY="14.0" prefHeight="500.0" prefWidth="500.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" xmlns:fx="http://javafx.com/fxml">
+  <columns>
+    <TableColumn fx:id="nameColumn" editable="false" prefWidth="780.0" resizable="false" text="Fichier" />
+  </columns>
+</TableView>
+</children>
+</AnchorPane>
