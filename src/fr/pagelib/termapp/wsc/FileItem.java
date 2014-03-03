@@ -41,7 +41,7 @@ public class FileItem {
                 name = value.substring(indexOf+1);
             }
             else{
-                name =value;
+                name = value;
             }
         }
     }
