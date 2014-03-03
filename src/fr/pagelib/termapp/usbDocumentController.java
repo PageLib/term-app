@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,6 +21,7 @@ public class UsbDocumentController extends PageController {
 
     @FXML TableView<FileItem> table;
     @FXML TableColumn<FileItem, String> nameColumn;
+    @FXML Label pathLabel;
 
     private String currentDirectory;
 
@@ -37,12 +39,11 @@ public class UsbDocumentController extends PageController {
                                 FileItem oldValue, FileItem newValue) {
 
                 // newValue may be null when the list is cleared (in that case do not try to download the document)
-                if(newValue != null){
+                if (newValue != null) {
                     Path path = Paths.get(newValue.getFullPath());
-                    if(newValue.isDirectory()){
+                    if (newValue.isDirectory()) {
                         showDirectory(path);
-                    }
-                    else if(newValue.isPDF()){
+                    } else if (newValue.isPDF()) {
                         mainController.setCurrentDocumentPath(newValue.getFullPath());
                         mainController.showPage(MainController.Page.JOB_SETTINGS);
                     }
@@ -59,10 +60,18 @@ public class UsbDocumentController extends PageController {
                 FileItem fileItem = new FileItem(file);
                 fileList.add(fileItem);
             }
+            currentDirectory = path.toString();
+            pathLabel.setText(currentDirectory);
         }
         catch (IOException e1) {
             e1.printStackTrace();
         }
-
+    }
+    
+    public void parentFolder(){
+        //TODO securite pour pas plus remonter que la racine de la clé USB
+        Path path = Paths.get(currentDirectory);
+        Path parent = path.getParent();
+        showDirectory(parent);
     }
 }
