@@ -37,4 +37,7 @@ public class DocumentMetadata {
     public void setId(String id) {
         this.id = id;
     }
+
+    public DocumentMetadata() {
+    }
 }

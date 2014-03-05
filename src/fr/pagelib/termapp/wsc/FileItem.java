@@ -66,4 +66,8 @@ public class FileItem {
     public String getName() {
         return name;
     }
+
+    public boolean isOPenable() {
+        return isPDF() || isDirectory();
+    }
 }

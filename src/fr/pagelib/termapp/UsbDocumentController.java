@@ -1,5 +1,6 @@
 package fr.pagelib.termapp;
 
+import fr.pagelib.termapp.wsc.DocumentMetadata;
 import fr.pagelib.termapp.wsc.FileItem;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -45,7 +46,7 @@ public class UsbDocumentController extends PageController {
                         String nonPrintableStyle = "table-non-printable";
 
                         FileItem fileItem = null;
-                        if( getTableRow() != null ) {
+                        if (getTableRow() != null) {
                             fileItem = (FileItem) getTableRow().getItem();
                         }
 
@@ -53,7 +54,7 @@ public class UsbDocumentController extends PageController {
 
                             setText(fileItem.getName());
 
-                            if (!fileItem.isPDF() && !fileItem.isDirectory()) {
+                            if (!fileItem.isOPenable()) {
                                 getStyleClass().add(nonPrintableStyle);
                                 getStyleClass().remove(defaultTableStyle);
                             }
@@ -78,6 +79,9 @@ public class UsbDocumentController extends PageController {
                     showDirectory(path);
                 } else if (selectedFile.isPDF()) {
                     mainController.setCurrentDocumentPath(selectedFile.getFullPath());
+                    DocumentMetadata dm = new DocumentMetadata();
+                    dm.setName(selectedFile.getName());
+                    mainController.setCurrentDocumentMetadata(dm);
                     mainController.showPage(MainController.Page.JOB_SETTINGS);
                 }
             }
