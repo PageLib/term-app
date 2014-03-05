@@ -8,10 +8,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.embed.swing.SwingFXUtils;
 
@@ -88,6 +91,15 @@ public class JobSettingsController extends PageController {
                         p, GraphicsRenderingHints.PRINT, Page.BOUNDARY_CROPBOX, 0.0f, 1.0f);
                 Image fxImage = SwingFXUtils.toFXImage(awtImage, null);
                 pdfImageView.setImage(fxImage);
+            }
+        });
+        // restrict the key input to the selected characters
+        pagesField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent> () {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (!" 0123456789,-".contains(keyEvent.getCharacter())){
+                    keyEvent.consume();
+                }
             }
         });
     }
