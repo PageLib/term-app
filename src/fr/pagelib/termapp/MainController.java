@@ -35,8 +35,10 @@ public class MainController {
     public SourceController sourceController;
     public JobSettingsController jobSettingsController;
     public CloudDocumentController cloudDocumentController;
+    public UsbDocumentController usbDocumentController;
 
     public Configuration wsConfig;
+    private IAM iam;
 
     enum Page {  // used for showPage() method
         HOME,
@@ -69,10 +71,6 @@ public class MainController {
 
     @FXML public void logoutAction () {
         if (currentSession != null) {
-            // TODO: use a global wsConfig and IAM
-            Configuration wsConfig = new Configuration("http://localhost:5001", "", "", "");
-            IAM iam = new IAM(wsConfig);
-
             iam.logout(currentSession);
 
             setCurrentSession(null);
@@ -192,19 +190,35 @@ public class MainController {
         this.currentDocumentMetadata = currentDocumentMetadata;
     }
 
+    public Configuration getWsConfig() {
+        return wsConfig;
+    }
+
+    //  Set the
+    public void setWsConfig(Configuration wsConfig) {
+        this.wsConfig = wsConfig;
+        iam = new IAM(this.getWsConfig());
+    }
+
+    public IAM getIam() {
+        return iam;
+    }
     public void setPageController(Page page, PageController controller) {
         switch (page) {
             case HOME:
-                this.homeController = (HomeController) controller;
+                homeController = (HomeController) controller;
                 break;
             case LOGIN:
-                this.loginController = (LoginController) controller;
+                loginController = (LoginController) controller;
                 break;
             case SOURCE:
-                this.sourceController = (SourceController) controller;
+                sourceController = (SourceController) controller;
                 break;
             case CLOUD_DOCUMENT:
-                this.cloudDocumentController = (CloudDocumentController) controller;
+                cloudDocumentController = (CloudDocumentController) controller;
+                break;
+            case USB_DOCUMENT:
+                usbDocumentController = (UsbDocumentController) controller;
                 break;
             case JOB_SETTINGS:
                 this.jobSettingsController = (JobSettingsController) controller;

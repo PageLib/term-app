@@ -56,3 +56,6 @@
     -fx-text-fill: #bbb;
     -fx-alignment: center;
 }
+.table-non-printable {
+    -fx-text-fill: grey;
+}

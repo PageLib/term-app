@@ -2,21 +2,26 @@
 
 <?import java.lang.*?>
 <?import java.net.*?>
-<?import java.util.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="fr.pagelib.termapp.MainController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.pagelib.termapp.MainController">
   <children>
     <VBox prefHeight="400.0" prefWidth="600.0" style="" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <GridPane id="headerGridPane" fx:id="headerGrid" minHeight="80.0" styleClass="header-grid" visible="true">
           <children>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backAction" text="Retour" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="2" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backAction" text="Retour" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="2">
+<GridPane.margin>
+<Insets left="15.0" />
+</GridPane.margin></Button>
             <Label fx:id="pageTitleLabel" prefWidth="-1.0" styleClass="header-title" text="Titre de page" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2" />
             <Label id="usernameLabel" fx:id="userNameLabel" text="Utilisateur" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutAction" text="Logout" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutAction" text="Logout" GridPane.columnIndex="2" GridPane.rowIndex="1">
+<GridPane.margin>
+<Insets bottom="10.0" />
+</GridPane.margin></Button>
           </children>
           <columnConstraints>
             <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />

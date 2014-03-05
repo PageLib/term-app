@@ -1,7 +1,0 @@
-{
-    "iamEndpoint": "http://localhost:5001",
-    "invoicingEndpoint": "",
-    "docsEndpoint": "http://localhost:5002",
-    "settingsEndpoint": "",
-    "pdfPath": ""
-}
