@@ -25,6 +25,7 @@ public class UsbDocumentController extends PageController {
     @FXML Button parentButton;
 
     private String currentDirectory;
+    private String rootDirectory;
 
     private ObservableList<FileItem> fileList = FXCollections.observableArrayList();
 
@@ -64,10 +65,9 @@ public class UsbDocumentController extends PageController {
             }
         });
         table.setItems(fileList);
-        showDirectory(Paths.get("D:\\"));
     }
 
-    public void folderClicked(){
+    public void tableClicked(){
         FileItem selectedFile = table.getSelectionModel().getSelectedItem();
         // newValue may be null when the list is cleared (in that case do not try to download the document)
         if (selectedFile != null) {
@@ -87,12 +87,7 @@ public class UsbDocumentController extends PageController {
         try{
             DirectoryStream<Path> dir = Files.newDirectoryStream(path);
             table.getSelectionModel().clearSelection();
-            if(path.getRoot().equals(path)){
-                parentButton.setVisible(false);
-            }
-            else{
-                parentButton.setVisible(true);
-            }
+            parentButton.setDisable(isRoot(path));
             fileList.clear();
             for(Path file:dir){
                 FileItem fileItem = new FileItem(file);
@@ -107,12 +102,17 @@ public class UsbDocumentController extends PageController {
     }
     
     public void parentFolder(){
-        //TODO securite pour pas plus remonter que la racine de la clé USB
         Path path = Paths.get(currentDirectory);
         Path parent = path.getParent();
         showDirectory(parent);
     }
      public void reset(){
-        showDirectory(Paths.get("D:\\"));
+         rootDirectory = mainController.getWsConfig().getUsbRoot();
+         //TODO test si la clé USB est branché
+        showDirectory(Paths.get(rootDirectory));
+    }
+
+    public boolean isRoot(Path path) {
+        return rootDirectory.equals(path.toString());
     }
 }

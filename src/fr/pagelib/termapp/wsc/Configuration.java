@@ -12,6 +12,7 @@ public class Configuration {
     private String docsEndpoint;
     private String settingsEndpoint;
     private String pdfPath;
+    private String usbRoot;
 
     public static Configuration buildFromFile(String configPath) throws IOException {
 
@@ -29,18 +30,17 @@ public class Configuration {
                 root.getString("invoicingEndpoint"),
                 root.getString("docsEndpoint"),
                 root.getString("settingsEndpoint"),
-                root.getString("pdfPath"));
+                root.getString("pdfPath"),
+                root.getString("usbRoot"));
     }
 
-    public Configuration () {
-    }
-
-    public Configuration (String iamEndpoint, String invoicingEndpoint, String docsEndpoint, String settingsEndpoint, String pdfPath) {
+    public Configuration(String iamEndpoint, String invoicingEndpoint, String docsEndpoint, String settingsEndpoint, String pdfPath, String usbRoot) {
         this.iamEndpoint = iamEndpoint;
         this.invoicingEndpoint = invoicingEndpoint;
         this.docsEndpoint = docsEndpoint;
         this.settingsEndpoint = settingsEndpoint;
         this.pdfPath = pdfPath;
+        this.usbRoot = usbRoot;
     }
 
     public String getIamEndpoint() {
@@ -65,5 +65,9 @@ public class Configuration {
 
     public void setPdfPath(String pdfPath) {
         this.pdfPath = pdfPath;
+    }
+
+    public String getUsbRoot() {
+        return usbRoot;
     }
 }

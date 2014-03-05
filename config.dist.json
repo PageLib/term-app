@@ -3,5 +3,6 @@
     "invoicingEndpoint": "",
     "docsEndpoint": "",
     "settingsEndpoint": "",
-    "pdfPath": ""
+    "pdfPath": "",
+    "usbRoot": ""
 }

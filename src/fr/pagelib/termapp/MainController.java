@@ -116,6 +116,7 @@ public class MainController {
 
             case USB_DOCUMENT:
                 usbDocumentPage.setVisible(true);
+                usbDocumentController.reset();
                 previousPage = Page.SOURCE;
                 title = "Documents sur clé USB";
                 break;
