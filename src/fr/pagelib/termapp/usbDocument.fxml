@@ -8,14 +8,21 @@
 <AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.pagelib.termapp.UsbDocumentController">
 <children><VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 <children><HBox prefHeight="100.0" prefWidth="200.0">
-<children><Button fx:id="" mnemonicParsing="false" onAction="#parentFolder" text="Dossier parent">
+<children><Button fx:id="parentButton" minWidth="100.0" mnemonicParsing="false" onAction="#parentFolder" text="Dossier parent">
 <HBox.margin>
 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-</HBox.margin></Button><Label graphicTextGap="5.0" text="Path" fx:id="pathLabel" HBox.hgrow="ALWAYS">
+</HBox.margin>
+<BorderPane.margin>
+<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+</BorderPane.margin></Button>
+<Pane prefHeight="49.0" prefWidth="800.0" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<children><Label fx:id="pathLabel" graphicTextGap="5.0" maxWidth="1.7976931348623157E308" text="Path" BorderPane.alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
 <HBox.margin>
 <Insets top="10.0" />
 </HBox.margin></Label>
-</children></HBox><TableView fx:id="table" layoutX="22.0" layoutY="14.0" prefHeight="500.0" prefWidth="500.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" xmlns:fx="http://javafx.com/fxml">
+</children>
+</Pane>
+</children></HBox><TableView fx:id="table" layoutX="22.0" layoutY="14.0" onMouseClicked="#folderClicked" prefHeight="500.0" prefWidth="500.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" xmlns:fx="http://javafx.com/fxml">
   <columns>
     <TableColumn fx:id="nameColumn" editable="false" prefWidth="780.0" resizable="false" text="Fichier" />
   </columns>

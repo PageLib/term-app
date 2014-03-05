@@ -10,6 +10,11 @@ import java.nio.file.Path;
 public class FileItem {
     private String fullPath;
     private String name;
+
+    public FileItem(String fullPath) {
+        this.fullPath = fullPath;
+    }
+
     private boolean isDirectory;
     private boolean isPDF;
 
