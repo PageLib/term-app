@@ -43,8 +43,6 @@ public class Main extends Application {
         this.mainController = loader.getController();
         this.mainController.setWsConfig(Configuration.buildFromFile("config.json"));
 
-        this.mainController.wsConfig = Configuration.ConfigurationBuilder("config.json");
-
         // Load and set up pages
         addPage(this.mainController.homePage, MainController.Page.HOME, "home.fxml");
         addPage(this.mainController.loginPage, MainController.Page.LOGIN, "login.fxml");
