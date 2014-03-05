@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -30,6 +31,38 @@ public class UsbDocumentController extends PageController {
     @FXML
     public void initialize(){
         nameColumn.setCellValueFactory(new PropertyValueFactory<FileItem, String>("name"));
+        nameColumn.setCellFactory(new Callback<TableColumn<FileItem, String>, TableCell<FileItem, String>>() {
+            @Override
+            public TableCell<FileItem, String> call(TableColumn<FileItem, String> param) {
+                return new TableCell<FileItem, String>() {
+
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        String defaultTableStyle = "defaultTableStyle";
+                        String nonPrintableStyle = "table-non-printable";
+
+                        FileItem fileItem = null;
+                        if( getTableRow() != null ) {
+                            fileItem = (FileItem) getTableRow().getItem();
+                        }
+
+                        if (fileItem != null) {
+
+                            setText(fileItem.getName());
+
+                            if (!fileItem.isPDF() && !fileItem.isDirectory()) {
+                                getStyleClass().add(nonPrintableStyle);
+                                getStyleClass().remove(defaultTableStyle);
+                            }
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
         table.setItems(fileList);
         showDirectory(Paths.get("D:\\"));
     }
