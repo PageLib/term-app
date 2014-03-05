@@ -34,7 +34,7 @@ public class MainController {
     public LoginController loginController;
     public SourceController sourceController;
     public CloudDocumentController cloudDocumentController;
-    public UsbDocumentController usbDocumentController;
+    public UsbDocumentController2 usbDocumentController;
 
     public Configuration wsConfig;
     private IAM iam;
@@ -216,7 +216,7 @@ public class MainController {
                 cloudDocumentController = (CloudDocumentController) controller;
                 break;
             case USB_DOCUMENT:
-                usbDocumentController = (UsbDocumentController) controller;
+                usbDocumentController = (UsbDocumentController2) controller;
                 break;
         }
     }

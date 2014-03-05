@@ -31,3 +31,7 @@
 .error-label {
     -fx-text-fill: red;
 }
+
+.table-non-printable {
+    -fx-text-fill: grey;
+}
