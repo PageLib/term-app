@@ -59,6 +59,7 @@ public class CloudDocumentController extends PageController {
                         fos.write(rv);
                         fos.close();
 
+                        mainController.setCurrentDocumentPath(path);
                         mainController.setCurrentDocumentMetadata(newValue);
                         mainController.showPage(MainController.Page.JOB_SETTINGS);
                     }

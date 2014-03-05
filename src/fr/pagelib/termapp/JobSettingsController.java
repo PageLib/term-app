@@ -1,5 +1,6 @@
 package fr.pagelib.termapp;
 
+import fr.pagelib.termapp.wsc.PrintingJob;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -136,5 +137,22 @@ public class JobSettingsController extends PageController {
     public void nextPage() {
         int p = currentPage.get();
         if (p < totalPages - 1) currentPage.set(p + 1);
+    }
+
+    public void addToCart() {
+        // Create and add the new printing job
+        PrintingJob job = new PrintingJob();
+        job.setName(mainController.getCurrentDocumentMetadata().getName());
+        job.setPath(mainController.getCurrentDocumentPath());
+        job.setColor(true);
+        job.setCopies(1);
+        mainController.addCartJob(job);
+
+        // Remove the main controller's current job
+        mainController.setCurrentDocumentPath(null);
+        mainController.setCurrentDocumentMetadata(null);
+
+        // Show the cart page
+        mainController.showPage(MainController.Page.CART);
     }
 }

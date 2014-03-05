@@ -1,9 +1,6 @@
 package fr.pagelib.termapp;
 
-import fr.pagelib.termapp.wsc.Configuration;
-import fr.pagelib.termapp.wsc.DocumentMetadata;
-import fr.pagelib.termapp.wsc.IAM;
-import fr.pagelib.termapp.wsc.Session;
+import fr.pagelib.termapp.wsc.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -11,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+
+import java.util.ArrayList;
 
 public class MainController {
 
@@ -36,6 +35,7 @@ public class MainController {
     public JobSettingsController jobSettingsController;
     public CloudDocumentController cloudDocumentController;
     public UsbDocumentController usbDocumentController;
+    public CartController cartController;
 
     public Configuration wsConfig;
     private IAM iam;
@@ -60,9 +60,13 @@ public class MainController {
     String currentDocumentPath;
     DocumentMetadata currentDocumentMetadata;
 
+    ArrayList<PrintingJob> cartJobs;
+
     public void initialize () {
         // Ensures that the global VBox does not allow space for headerGrid when it is hidden
         headerGrid.managedProperty().bind(headerGrid.visibleProperty());
+
+        cartJobs = new ArrayList<PrintingJob>();
     }
 
     @FXML public void backAction () {
@@ -224,6 +228,21 @@ public class MainController {
             case JOB_SETTINGS:
                 this.jobSettingsController = (JobSettingsController) controller;
                 break;
+            case CART:
+                this.cartController = (CartController) controller;
+                break;
         }
+    }
+
+    public ArrayList<PrintingJob> getCartJobs() {
+        return cartJobs;
+    }
+
+    public void resetCartJobs() {
+        cartJobs.clear();
+    }
+
+    public void addCartJob(PrintingJob job) {
+        cartJobs.add(job);
     }
 }
