@@ -10,6 +10,10 @@ public class PrintingJob {
     PageRanges pages;
     Boolean color;
 
+    public String toString() {
+        return String.format("<PrintJob for %s>", getPath());
+    }
+
     /**
      * Getters and setters
      */
