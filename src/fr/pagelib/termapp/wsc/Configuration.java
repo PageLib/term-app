@@ -13,6 +13,7 @@ public class Configuration {
     private String settingsEndpoint;
     private String pdfPath;
     private String usbRoot;
+    private String printerNameRegex;
 
     public static Configuration buildFromFile(String configPath) throws IOException {
 
@@ -25,23 +26,20 @@ public class Configuration {
         JsonStructure rvJson = Json.createReader(new FileReader(absolutePath)).read();
         JsonObject root = (JsonObject) rvJson;
 
-        return new Configuration(
-                root.getString("iamEndpoint"),
-                root.getString("invoicingEndpoint"),
-                root.getString("docsEndpoint"),
-                root.getString("settingsEndpoint"),
-                root.getString("pdfPath"),
-                root.getString("usbRoot"));
+        Configuration config = new Configuration();
+
+        config.iamEndpoint = root.getString("iamEndpoint");
+        config.invoicingEndpoint = root.getString("invoicingEndpoint");
+        config.docsEndpoint = root.getString("docsEndpoint");
+        config.settingsEndpoint = root.getString("settingsEndpoint");
+        config.pdfPath = root.getString("pdfPath");
+        config.usbRoot = root.getString("usbRoot");
+        config.printerNameRegex = root.getString("printerNameRegex");
+
+        return config;
     }
 
-    public Configuration(String iamEndpoint, String invoicingEndpoint, String docsEndpoint, String settingsEndpoint, String pdfPath, String usbRoot) {
-        this.iamEndpoint = iamEndpoint;
-        this.invoicingEndpoint = invoicingEndpoint;
-        this.docsEndpoint = docsEndpoint;
-        this.settingsEndpoint = settingsEndpoint;
-        this.pdfPath = pdfPath;
-        this.usbRoot = usbRoot;
-    }
+    public Configuration() {}
 
     public String getIamEndpoint() {
         return iamEndpoint;
@@ -69,5 +67,9 @@ public class Configuration {
 
     public String getUsbRoot() {
         return usbRoot;
+    }
+
+    public String getPrinterNameRegex() {
+        return printerNameRegex;
     }
 }
