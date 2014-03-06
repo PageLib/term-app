@@ -141,6 +141,7 @@ public class MainController {
                 break;
 
             case CART:
+                cartController.reset();
                 cartPage.setVisible(true);
                 title = "Panier";
                 break;
