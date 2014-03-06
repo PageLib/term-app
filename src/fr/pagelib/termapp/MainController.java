@@ -79,6 +79,7 @@ public class MainController {
 
             setCurrentSession(null);
             setCurrentUserName("");
+            resetCartJobs();
             showPage(Page.HOME);
         }
     }
@@ -245,5 +246,8 @@ public class MainController {
 
     public void addCartJob(PrintingJob job) {
         cartJobs.add(job);
+    }
+    public void removeCartJob(PrintingJob job){
+        cartJobs.remove(job);
     }
 }

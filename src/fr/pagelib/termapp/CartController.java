@@ -22,20 +22,23 @@ public class CartController extends PageController {
 
     ObservableList<PrintingJob> jobList = FXCollections.observableArrayList();
 
-    static class PrintJobCell extends ListCell<PrintingJob> {
+    class PrintJobCell extends ListCell<PrintingJob> {
         HBox hbox = new HBox();
         Label label = new Label("(empty)");
         Pane pane = new Pane();
         Button button = new Button("Supprimer");
+        PrintingJob job;
 
         public PrintJobCell() {
             super();
             hbox.getChildren().addAll(label, pane, button);
             HBox.setHgrow(pane, Priority.ALWAYS);
             button.setOnAction(new EventHandler<ActionEvent>() {
+
                 @Override
                 public void handle(ActionEvent actionEvent) {
-
+                    jobList.remove(job);
+                    mainController.removeCartJob(job);
                 }
             });
         }
@@ -49,6 +52,7 @@ public class CartController extends PageController {
             else {
                 label.setText(printingJob.getName() != null ? printingJob.getName() : "Sans nom");
                 setGraphic(hbox);
+                job = printingJob;
             }
         }
 
@@ -73,7 +77,12 @@ public class CartController extends PageController {
     }
 
     public void prepaidPrint() {
+        // TODO Check amount in invoicing
+        mainController.showPage(MainController.Page.PRINTING);
+    }
 
+    public void addDocument(){
+        mainController.showPage(MainController.Page.SOURCE);
     }
 
 }
