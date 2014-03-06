@@ -14,7 +14,7 @@ public class CartController extends PageController {
     }
 
     public void prepaidPrint() {
-
+        mainController.showPage(MainController.Page.PRINTING);
     }
 
 }

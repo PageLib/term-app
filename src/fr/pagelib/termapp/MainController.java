@@ -36,6 +36,7 @@ public class MainController {
     public CloudDocumentController cloudDocumentController;
     public UsbDocumentController usbDocumentController;
     public CartController cartController;
+    public PrintingController printingController;
 
     public Configuration wsConfig;
     private IAM iam;
@@ -149,6 +150,7 @@ public class MainController {
                 printingPage.setVisible(true);
                 title = "Impression en cours ...";
                 showHeader = false;
+                printingController.reset();
                 break;
         }
 
@@ -230,6 +232,9 @@ public class MainController {
                 break;
             case CART:
                 this.cartController = (CartController) controller;
+                break;
+            case PRINTING:
+                this.printingController = (PrintingController) controller;
                 break;
         }
     }
