@@ -16,6 +16,7 @@
         <Button minWidth="150.0" mnemonicParsing="false" onAction="#prepaidPrint" prefHeight="100.0" prefWidth="150.0" text="Compte prépayé" VBox.vgrow="NEVER">
 <HBox.margin>
 <Insets />
+<Insets />
 </HBox.margin></Button>
 </children></HBox>
       </children>

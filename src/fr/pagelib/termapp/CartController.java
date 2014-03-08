@@ -1,6 +1,9 @@
 package fr.pagelib.termapp;
 
 import fr.pagelib.termapp.wsc.PrintingJob;
+import fr.pagelib.termapp.wsc.exc.InvoicingException;
+import fr.pagelib.termapp.wsc.model.PrintingTransaction;
+import fr.pagelib.termapp.wsc.repo.TransactionRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -77,8 +80,32 @@ public class CartController extends PageController {
     }
 
     public void prepaidPrint() {
-        // TODO Check amount in invoicing
-        mainController.showPage(MainController.Page.PRINTING);
+        // TODO something cleaner for the copies
+        int pageGreyLevel = 0;
+        int pageColor = 0;
+        for(PrintingJob job: jobList){
+            if(job.getColor()){
+                pageColor += job.getCopies();
+            }else {
+                pageGreyLevel += job.getCopies();
+            }
+        }
+        double amount = 0.2 * pageColor + 0.1 * pageGreyLevel;
+        PrintingTransaction printingTransaction = new PrintingTransaction(
+                mainController.getCurrentSession().getUserID(),
+                -amount,
+                "EUR",
+                pageColor,
+                pageGreyLevel,
+                1
+        );
+        TransactionRepository transactionRepository = new TransactionRepository(mainController.getWsConfig(), mainController.getCurrentSession());
+        try {
+            transactionRepository.post(printingTransaction);
+            mainController.showPage(MainController.Page.PRINTING);
+        } catch (InvoicingException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addDocument(){
