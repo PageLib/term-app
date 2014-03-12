@@ -24,6 +24,7 @@ import org.icepdf.core.pobjects.Document;
 import org.icepdf.core.pobjects.Page;
 import org.icepdf.core.util.GraphicsRenderingHints;
 
+import javax.print.attribute.standard.PageRanges;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -94,11 +95,33 @@ public class JobSettingsController extends PageController {
             }
         });
         // restrict the key input to the selected characters
-        pagesField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent> () {
+        pagesField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                if (!" 0123456789,-".contains(keyEvent.getCharacter())){
+                // Disable the select button if the pageRange has bot the good look
+                if (!" 0123456789,-".contains(keyEvent.getCharacter())) {
                     keyEvent.consume();
+                }
+            }
+        });
+        pagesField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                okButton.setDisable(false);
+                String toCheck = s2.replaceAll("\\s+","");
+                try{
+                    PageRanges pageRanges= new PageRanges(toCheck);
+                    // Check if one of the page is no bigger than the number of page in the document
+                    for(int[] range:pageRanges.getMembers()){
+                        for(int page:range){
+                            if(totalPages < page){
+                                okButton.setDisable(true);
+                            }
+                        }
+                    }
+                }
+                catch (IllegalArgumentException | NullPointerException e){
+                    okButton.setDisable(true);
                 }
             }
         });
