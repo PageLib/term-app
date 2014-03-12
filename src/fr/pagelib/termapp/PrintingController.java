@@ -94,7 +94,7 @@ public class PrintingController extends PageController {
      */
     public void findPrinter(String pattern) throws PrinterNotFoundException {
 
-        PrintService[] services = PrintServiceLookup.lookupPrintServices(DocFlavor.INPUT_STREAM.PDF, null);
+        PrintService[] services = PrintServiceLookup.lookupPrintServices(DocFlavor.INPUT_STREAM.AUTOSENSE, null);
 
         for (PrintService service : services) {
             if (Pattern.matches(pattern, service.toString())) {
@@ -115,7 +115,7 @@ public class PrintingController extends PageController {
             try {
                 // Create a javax.print.SimpleDoc
                 FileInputStream printerStream = new FileInputStream(job.getPath());
-                SimpleDoc printerDoc = new SimpleDoc(printerStream, DocFlavor.INPUT_STREAM.PDF, null);
+                SimpleDoc printerDoc = new SimpleDoc(printerStream, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
 
                 // Prepare print settings
                 PrintRequestAttributeSet printerAttributes = new HashPrintRequestAttributeSet();
