@@ -4,5 +4,6 @@
     "docsEndpoint": "",
     "settingsEndpoint": "",
     "pdfPath": "",
-    "usbRoot": ""
+    "usbRoot": "",
+    "printerNameRegex": ""
 }

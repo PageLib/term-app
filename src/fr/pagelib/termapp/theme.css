@@ -59,3 +59,7 @@
 .table-non-printable {
     -fx-text-fill: grey;
 }
+
+.job-completed-label {
+    -fx-text-fill: #90ee90;
+}

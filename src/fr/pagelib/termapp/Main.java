@@ -41,7 +41,7 @@ public class Main extends Application {
         primaryStage.show();
 
         this.mainController = loader.getController();
-        this.mainController.setWsConfig(Configuration.buildFromFile("config.json"));
+        this.mainController.setWsConfig(wsConfig);
 
         // Load and set up pages
         addPage(this.mainController.homePage, MainController.Page.HOME, "home.fxml");
@@ -51,6 +51,10 @@ public class Main extends Application {
         addPage(this.mainController.usbDocumentPage, MainController.Page.USB_DOCUMENT, "usbDocument.fxml");
         addPage(this.mainController.jobSettingsPage, MainController.Page.JOB_SETTINGS, "jobSettings.fxml");
         addPage(this.mainController.cartPage, MainController.Page.CART, "cart.fxml");
+        addPage(this.mainController.printingPage, MainController.Page.PRINTING, "printing.fxml");
+
+        // Set up the printer (will throw PrinterNotFoundException if no match)
+        this.mainController.printingController.findPrinter(wsConfig.getPrinterNameRegex());
 
         this.mainController.showPage(MainController.Page.HOME);
    }
