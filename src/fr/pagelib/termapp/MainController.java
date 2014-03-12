@@ -80,6 +80,7 @@ public class MainController {
 
             setCurrentSession(null);
             setCurrentUserName("");
+            resetCartJobs();
             showPage(Page.HOME);
         }
     }
@@ -142,6 +143,7 @@ public class MainController {
                 break;
 
             case CART:
+                cartController.reset();
                 cartPage.setVisible(true);
                 title = "Panier";
                 break;
@@ -249,5 +251,8 @@ public class MainController {
 
     public void addCartJob(PrintingJob job) {
         cartJobs.add(job);
+    }
+    public void removeCartJob(PrintingJob job){
+        cartJobs.remove(job);
     }
 }

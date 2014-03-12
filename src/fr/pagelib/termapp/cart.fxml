@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="fr.pagelib.termapp.CartController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.pagelib.termapp.CartController">
   <children>
     <VBox prefHeight="400.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <ListView fx:id="jobsListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-        <Button mnemonicParsing="false" onAction="#prepaidPrint" text="Compte prépayé" VBox.vgrow="NEVER" />
+        <ListView fx:id="jobsListView" prefHeight="269.0" prefWidth="532.0" VBox.vgrow="ALWAYS" /><HBox prefHeight="100.0" prefWidth="680.0">
+<children><Button mnemonicParsing="false" onAction="#addDocument" prefHeight="100.0" prefWidth="280.0" text="Ajouter un autre document" />
+    <Pane prefHeight="200.0" prefWidth="400.0">
+    </Pane>
+        <Button minWidth="150.0" mnemonicParsing="false" onAction="#prepaidPrint" prefHeight="100.0" prefWidth="150.0" text="Compte prépayé" VBox.vgrow="NEVER">
+<HBox.margin>
+<Insets />
+<Insets />
+</HBox.margin></Button>
+</children></HBox>
       </children>
       <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
