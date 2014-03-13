@@ -48,6 +48,7 @@ public class JobSettingsController extends PageController {
     SimpleBooleanProperty color;
     SimpleStringProperty copies;
 
+    PrintingJob printingJob;
     Document pdfDocument;
     Integer totalPages;
     SimpleIntegerProperty currentPage;
@@ -69,14 +70,18 @@ public class JobSettingsController extends PageController {
 
         // Afficher "oui" ou "non" sur le bouton "couleur" en fonction du choix
         color.addListener(new ChangeListener<Boolean>() {
-            @Override public void changed(ObservableValue<? extends Boolean> obs, Boolean oldValue, Boolean newValue) {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> obs, Boolean oldValue, Boolean newValue) {
                 colorToggle.setText(newValue ? "Oui" : "Non");
                 greyLevelsHintLabel.setVisible(!newValue);
+                printingJob.setColor(newValue);
+                updatePrice();
             }
         });
 
         currentPage.addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> obs, Number oldValue, Number newValue) {
+            @Override
+            public void changed(ObservableValue<? extends Number> obs, Number oldValue, Number newValue) {
                 Integer p = (Integer) newValue;
 
                 // Navigation stuff
@@ -100,6 +105,20 @@ public class JobSettingsController extends PageController {
                 }
             }
         });
+        pagesField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                // Disable the select button if the pageRange has bot the good look
+                okButton.setDisable(false);
+                try{
+                    printingJob.setPages(generatePageRange(s2));
+                    updatePrice();
+                }
+                catch (IllegalArgumentException | NullPointerException e){
+                    okButton.setDisable(true);
+                }
+            }
+        });
 
         copiesField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
@@ -109,19 +128,21 @@ public class JobSettingsController extends PageController {
                 }
             }
         });
-        pagesField.textProperty().addListener(new ChangeListener<String>() {
+        copiesField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
-                // Disable the select button if the pageRange has bot the good look
-                okButton.setDisable(false);
-                try{
-                    generatePageRange(s2);
-                }
-                catch (IllegalArgumentException | NullPointerException e){
-                    okButton.setDisable(true);
-                }
+                Integer copiesNumber = "".equals(s2) ? 1 : Integer.parseInt(s2);
+                printingJob.setCopies(copiesNumber);
+                updatePrice();
             }
         });
+    }
+    public void updatePrice(){
+        String price = String.valueOf(printingJob.getPrice());
+        int coma = price.indexOf(".");
+        price = price.substring(0, Math.min(coma+2, price.length())) + " €";
+        price.replace(",", ".");
+        priceLabel.setText(price);
     }
 
     public PageRanges generatePageRange(String pagesToCheck){
@@ -143,6 +164,9 @@ public class JobSettingsController extends PageController {
     }
 
     public void reset() {
+
+        documentNameLabel.setText(printingJob.getName());
+
         pages.set("");
         okButton.setDisable(false);
         color.set(false);
@@ -176,6 +200,13 @@ public class JobSettingsController extends PageController {
             System.out.println("IOException opening PDF document: " + e);
             pdfDocument = null;
         }
+        printingJob = new PrintingJob();
+        printingJob.setName(mainController.getCurrentDocumentMetadata().getName());
+        printingJob.setPath(mainController.getCurrentDocumentPath());
+        printingJob.setCopies(1);
+        printingJob.setColor(false);
+        printingJob.setPages(generatePageRange(""));
+        updatePrice();
     }
 
     @FXML
@@ -192,13 +223,7 @@ public class JobSettingsController extends PageController {
 
     public void addToCart() {
         // Create and add the new printing job
-        PrintingJob job = new PrintingJob();
-        job.setName(mainController.getCurrentDocumentMetadata().getName());
-        job.setPath(mainController.getCurrentDocumentPath());
-        job.setColor(color.getValue());
-        job.setCopies(Integer.parseInt(copies.getValue()));
-        job.setPages(generatePageRange(pagesField.getText()));
-        mainController.addCartJob(job);
+        mainController.addCartJob(printingJob);
 
         // Remove the main controller's current job
         mainController.setCurrentDocumentPath(null);
