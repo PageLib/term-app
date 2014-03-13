@@ -61,7 +61,7 @@ public class PrintingJob {
     public Integer getPageCount() {
         Integer pageCount = 0;
         for(int[] range:getPages().getMembers()){
-            pageCount += range[1] + 1 -range[0];
+            pageCount += range[1] + 1 - range[0];
         }
         return pageCount;
     }
@@ -71,5 +71,9 @@ public class PrintingJob {
 
     public Integer getPageGreyLevel() {
         return !color ? getPageCount()*copies : 0;
+    }
+
+    public double getPrice() {
+        return getPageColor() * Configuration.getConfig().getPriceColor() + getPageGreyLevel() * Configuration.getConfig().getPriceGreyLevel();
     }
 }

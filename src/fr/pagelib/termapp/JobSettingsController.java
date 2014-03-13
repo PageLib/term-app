@@ -2,20 +2,17 @@ package fr.pagelib.termapp;
 
 import fr.pagelib.termapp.wsc.PrintingJob;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.embed.swing.SwingFXUtils;
 
 import org.icepdf.core.exceptions.PDFException;
@@ -98,7 +95,6 @@ public class JobSettingsController extends PageController {
         pagesField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                // Disable the select button if the pageRange has bot the good look
                 if (!" 0123456789,-".contains(keyEvent.getCharacter())) {
                     keyEvent.consume();
                 }
@@ -108,7 +104,6 @@ public class JobSettingsController extends PageController {
         copiesField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                // Disable the select button if the pageRange has bot the good look
                 if (!"0123456789".contains(keyEvent.getCharacter())) {
                     keyEvent.consume();
                 }
@@ -117,19 +112,10 @@ public class JobSettingsController extends PageController {
         pagesField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                // Disable the select button if the pageRange has bot the good look
                 okButton.setDisable(false);
-                String toCheck = s2.replaceAll("\\s+","");
-                //TODO si le champs est vide, imprimer toutes les pages
                 try{
-                    PageRanges pageRanges= new PageRanges(toCheck);
-                    // Check if one of the page is no bigger than the number of page in the document
-                    for(int[] range:pageRanges.getMembers()){
-                        for(int page:range){
-                            if(totalPages < page){
-                                okButton.setDisable(true);
-                            }
-                        }
-                    }
+                    generatePageRange(s2);
                 }
                 catch (IllegalArgumentException | NullPointerException e){
                     okButton.setDisable(true);
@@ -138,8 +124,27 @@ public class JobSettingsController extends PageController {
         });
     }
 
+    public PageRanges generatePageRange(String pagesToCheck){
+        pagesToCheck = pagesToCheck.replaceAll("\\s+","");
+        //si le champs est vide, imprimer toutes les pages
+        if ("".equals(pagesToCheck)) {
+            return new PageRanges(1, totalPages);
+        }
+        PageRanges pageRanges = new PageRanges(pagesToCheck);
+        // Check if one of the page is no bigger than the number of page in the document
+        for (int[] range : pageRanges.getMembers()) {
+            for (int page : range) {
+                if (totalPages < page) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+        return pageRanges;
+    }
+
     public void reset() {
         pages.set("");
+        okButton.setDisable(false);
         color.set(false);
         copies.set("1");
 
@@ -192,7 +197,7 @@ public class JobSettingsController extends PageController {
         job.setPath(mainController.getCurrentDocumentPath());
         job.setColor(color.getValue());
         job.setCopies(Integer.parseInt(copies.getValue()));
-        job.setPages(new PageRanges(pagesField.getText()));
+        job.setPages(generatePageRange(pagesField.getText()));
         mainController.addCartJob(job);
 
         // Remove the main controller's current job

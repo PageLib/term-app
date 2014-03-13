@@ -38,7 +38,6 @@ public class MainController {
     public CartController cartController;
     public PrintingController printingController;
 
-    public Configuration wsConfig;
     private IAM iam;
 
     enum Page {  // used for showPage() method
@@ -63,9 +62,11 @@ public class MainController {
 
     ArrayList<PrintingJob> cartJobs;
 
+
     public void initialize () {
         // Ensures that the global VBox does not allow space for headerGrid when it is hidden
         headerGrid.managedProperty().bind(headerGrid.visibleProperty());
+        iam = new IAM();
 
         cartJobs = new ArrayList<PrintingJob>();
     }
@@ -199,15 +200,7 @@ public class MainController {
         this.currentDocumentMetadata = currentDocumentMetadata;
     }
 
-    public Configuration getWsConfig() {
-        return wsConfig;
-    }
 
-    //  Set the
-    public void setWsConfig(Configuration wsConfig) {
-        this.wsConfig = wsConfig;
-        iam = new IAM(this.getWsConfig());
-    }
 
     public IAM getIam() {
         return iam;

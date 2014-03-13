@@ -5,5 +5,7 @@
     "settingsEndpoint": "",
     "pdfPath": "",
     "usbRoot": "",
-    "printerNameRegex": ""
+    "printerNameRegex": "",
+    "priceColor": 0.*,
+    "priceGreyLevel": 0.*
 }

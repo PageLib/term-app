@@ -14,8 +14,21 @@ public class Configuration {
     private String pdfPath;
     private String usbRoot;
     private String printerNameRegex;
+    private double priceColor;
 
-    public static Configuration buildFromFile(String configPath) throws IOException {
+    private double priceGreyLevel;
+
+    private static Configuration config;
+
+    public static Configuration getConfig(){
+        return config;
+    }
+
+    public static void setConfig(String path) throws IOException {
+        config = Configuration.buildFromFile(path);
+    }
+
+    private static Configuration buildFromFile(String configPath) throws IOException {
 
         // Compute the absolute path corresponding to configPath (relative to the current working directory)
         String cwdPath = new File(".").getAbsolutePath();
@@ -35,11 +48,13 @@ public class Configuration {
         config.pdfPath = root.getString("pdfPath");
         config.usbRoot = root.getString("usbRoot");
         config.printerNameRegex = root.getString("printerNameRegex");
+        config.priceColor = root.getJsonNumber("priceColor").doubleValue();
+        config.priceGreyLevel = root.getJsonNumber("priceGreyLevel").doubleValue();
 
         return config;
     }
 
-    public Configuration() {}
+    private Configuration() {}
 
     public String getIamEndpoint() {
         return iamEndpoint;
@@ -71,5 +86,14 @@ public class Configuration {
 
     public String getPrinterNameRegex() {
         return printerNameRegex;
+    }
+
+
+    public double getPriceColor() {
+        return priceColor;
+    }
+
+    public double getPriceGreyLevel() {
+        return priceGreyLevel;
     }
 }

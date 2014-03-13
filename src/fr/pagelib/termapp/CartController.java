@@ -1,5 +1,6 @@
 package fr.pagelib.termapp;
 
+import fr.pagelib.termapp.wsc.Configuration;
 import fr.pagelib.termapp.wsc.PrintingJob;
 import fr.pagelib.termapp.wsc.exc.InvoicingException;
 import fr.pagelib.termapp.wsc.model.PrintingTransaction;
@@ -83,11 +84,12 @@ public class CartController extends PageController {
         // TODO something cleaner for the copies
         int pageGreyLevel = 0;
         int pageColor = 0;
+        double amount = 0;
         for(PrintingJob job: jobList){
             pageColor += job.getPageColor();
             pageGreyLevel += job.getPageGreyLevel();
+            amount += job.getPrice();
         }
-        double amount = 0.2 * pageColor + 0.1 * pageGreyLevel;
         PrintingTransaction printingTransaction = new PrintingTransaction(
                 mainController.getCurrentSession().getUserID(),
                 -amount,
@@ -96,7 +98,7 @@ public class CartController extends PageController {
                 pageGreyLevel,
                 1
         );
-        TransactionRepository transactionRepository = new TransactionRepository(mainController.getWsConfig(), mainController.getCurrentSession());
+        TransactionRepository transactionRepository = new TransactionRepository(Configuration.getConfig(), mainController.getCurrentSession());
         try {
             transactionRepository.post(printingTransaction);
             mainController.showPage(MainController.Page.PRINTING);

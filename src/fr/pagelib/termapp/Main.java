@@ -18,11 +18,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        Configuration wsConfig = null;
 
         try {
             // TODO: allow the file name to be set via a CLI argument or an environment variable
-            wsConfig = Configuration.buildFromFile("config.json");
+            Configuration.setConfig("config.json");
         }
         catch (FileNotFoundException e) {
             System.err.println("Unable to find configuration file.");
@@ -41,7 +40,6 @@ public class Main extends Application {
         primaryStage.show();
 
         this.mainController = loader.getController();
-        this.mainController.setWsConfig(wsConfig);
 
         // Load and set up pages
         addPage(this.mainController.homePage, MainController.Page.HOME, "home.fxml");
@@ -54,7 +52,7 @@ public class Main extends Application {
         addPage(this.mainController.printingPage, MainController.Page.PRINTING, "printing.fxml");
 
         // Set up the printer (will throw PrinterNotFoundException if no match)
-        this.mainController.printingController.findPrinter(wsConfig.getPrinterNameRegex());
+        this.mainController.printingController.findPrinter(Configuration.getConfig().getPrinterNameRegex());
 
         this.mainController.showPage(MainController.Page.HOME);
    }

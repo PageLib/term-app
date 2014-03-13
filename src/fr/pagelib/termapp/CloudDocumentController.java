@@ -1,5 +1,6 @@
 package fr.pagelib.termapp;
 
+import fr.pagelib.termapp.wsc.Configuration;
 import fr.pagelib.termapp.wsc.DocumentMetadata;
 
 import javafx.beans.value.ChangeListener;
@@ -49,11 +50,11 @@ public class CloudDocumentController extends PageController {
                     try {
                         // Download the file contents
                         String url = String.format("%s/v1/docs/%s/raw",
-                                mainController.wsConfig.getDocsEndpoint(), newValue.getId());
+                                Configuration.getConfig().getDocsEndpoint(), newValue.getId());
                         byte[] rv = Request.Get(url).execute().returnContent().asBytes();
 
                         // Store them into a temporary file
-                        String path =  mainController.getWsConfig().getPdfPath()
+                        String path =  Configuration.getConfig().getPdfPath()
                                 + File.separator + newValue.getId() + ".pdf";
                         FileOutputStream fos = new FileOutputStream(path);
                         fos.write(rv);
@@ -77,7 +78,7 @@ public class CloudDocumentController extends PageController {
 
         try {
             String url = String.format("%s/v1/docs?user_id=%s",
-                    mainController.wsConfig.getDocsEndpoint(), mainController.currentSession.getUserID());
+                    Configuration.getConfig().getDocsEndpoint(), mainController.currentSession.getUserID());
             String rv = Request.Get(url).execute().returnContent().asString();
 
             JsonObject root = (JsonObject) Json.createReader(new StringReader(rv)).read();

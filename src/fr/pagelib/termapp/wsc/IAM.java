@@ -13,16 +13,13 @@ import fr.pagelib.termapp.wsc.exc.LoginException;
 
 public class IAM {
 
-    private Configuration config;
-
-    public IAM (Configuration config) {
-        this.config = config;
+    public IAM () {
     }
 
     public Session login (String username, String password) throws LoginException {
         try {
             // Compose request
-            String url = this.config.getIamEndpoint() + "/v1/login";
+            String url = Configuration.getConfig().getIamEndpoint() + "/v1/login";
             JsonObject model = Json.createObjectBuilder()
                     .add("login", username)
                     .add("password_hash", password)
@@ -55,7 +52,7 @@ public class IAM {
 
     public void logout (Session session) {
         try {
-            String url = this.config.getIamEndpoint() + String.format("/v1/sessions/%s/logout", session.getSessionID());
+            String url = Configuration.getConfig().getIamEndpoint() + String.format("/v1/sessions/%s/logout", session.getSessionID());
             Request.Post(url).execute();
         }
         catch (HttpResponseException e) {

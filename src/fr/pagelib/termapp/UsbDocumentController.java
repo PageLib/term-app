@@ -1,5 +1,6 @@
 package fr.pagelib.termapp;
 
+import fr.pagelib.termapp.wsc.Configuration;
 import fr.pagelib.termapp.wsc.DocumentMetadata;
 import fr.pagelib.termapp.wsc.FileItem;
 import javafx.beans.value.ChangeListener;
@@ -111,7 +112,7 @@ public class UsbDocumentController extends PageController {
         showDirectory(parent);
     }
      public void reset(){
-         rootDirectory = mainController.getWsConfig().getUsbRoot();
+         rootDirectory = Configuration.getConfig().getUsbRoot();
          //TODO test si la clé USB est branché
         showDirectory(Paths.get(rootDirectory));
     }
