@@ -25,6 +25,8 @@ import javax.print.attribute.standard.PageRanges;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  *
@@ -134,15 +136,24 @@ public class JobSettingsController extends PageController {
                 Integer copiesNumber = "".equals(s2) ? 1 : Integer.parseInt(s2);
                 printingJob.setCopies(copiesNumber);
                 updatePrice();
+                if(copiesNumber == 0){
+                    okButton.setDisable(true);
+                }
+                else{
+                    okButton.setDisable(false);
+                }
             }
         });
     }
     public void updatePrice(){
-        String price = String.valueOf(printingJob.getPrice());
-        int coma = price.indexOf(".");
-        price = price.substring(0, Math.min(coma+2, price.length())) + " €";
-        price.replace(",", ".");
-        priceLabel.setText(price);
+        double price = printingJob.getPrice();
+        NumberFormat euroFormat = NumberFormat.getCurrencyInstance(Locale.FRANCE);
+        euroFormat.setMaximumFractionDigits(2);
+        euroFormat.setMinimumFractionDigits(2);
+      //  int coma = price.indexOf(".");
+    //    price = price.substring(0, Math.min(coma+2, price.length())) + " €";
+  //      price.replace(",", ".");
+        priceLabel.setText(euroFormat.format(price));
     }
 
     public PageRanges generatePageRange(String pagesToCheck){
@@ -164,13 +175,18 @@ public class JobSettingsController extends PageController {
     }
 
     public void reset() {
-
-        documentNameLabel.setText(printingJob.getName());
+        printingJob = new PrintingJob();
+        printingJob.setName(mainController.getCurrentDocumentMetadata().getName());
+        printingJob.setPath(mainController.getCurrentDocumentPath());
+        printingJob.setCopies(1);
+        printingJob.setColor(false);
+        printingJob.setPages(new PageRanges(1));
 
         pages.set("");
         okButton.setDisable(false);
         color.set(false);
         copies.set("1");
+        documentNameLabel.setText(printingJob.getName());
 
         if (pdfDocument != null) pdfDocument.dispose();
 
@@ -200,11 +216,6 @@ public class JobSettingsController extends PageController {
             System.out.println("IOException opening PDF document: " + e);
             pdfDocument = null;
         }
-        printingJob = new PrintingJob();
-        printingJob.setName(mainController.getCurrentDocumentMetadata().getName());
-        printingJob.setPath(mainController.getCurrentDocumentPath());
-        printingJob.setCopies(1);
-        printingJob.setColor(false);
         printingJob.setPages(generatePageRange(""));
         updatePrice();
     }
