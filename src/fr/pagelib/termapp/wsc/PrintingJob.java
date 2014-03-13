@@ -57,4 +57,19 @@ public class PrintingJob {
     public void setColor(Boolean color) {
         this.color = color;
     }
+
+    public Integer getPageCount() {
+        Integer pageCount = 0;
+        for(int[] range:getPages().getMembers()){
+            pageCount += range[1] + 1 -range[0];
+        }
+        return pageCount;
+    }
+    public Integer getPageColor() {
+        return color ? getPageCount()*copies : 0;
+    }
+
+    public Integer getPageGreyLevel() {
+        return !color ? getPageCount()*copies : 0;
+    }
 }

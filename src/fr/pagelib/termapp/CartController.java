@@ -84,11 +84,8 @@ public class CartController extends PageController {
         int pageGreyLevel = 0;
         int pageColor = 0;
         for(PrintingJob job: jobList){
-            if(job.getColor()){
-                pageColor += job.getCopies();
-            }else {
-                pageGreyLevel += job.getCopies();
-            }
+            pageColor += job.getPageColor();
+            pageGreyLevel += job.getPageGreyLevel();
         }
         double amount = 0.2 * pageColor + 0.1 * pageGreyLevel;
         PrintingTransaction printingTransaction = new PrintingTransaction(
@@ -111,5 +108,4 @@ public class CartController extends PageController {
     public void addDocument(){
         mainController.showPage(MainController.Page.SOURCE);
     }
-
 }
