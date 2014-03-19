@@ -66,11 +66,14 @@ public class Configuration {
         return m.group(1);
     }
     public static int getPort(String url) {
-        if (url.matches(":[0-9]+$")) {
-            Pattern portPattern = Pattern.compile(":([0-9]+)$");
-            Matcher m = portPattern.matcher(url);
-            m.find();
+        Pattern portPattern = Pattern.compile(":([0-9]+)$");
+        Matcher m = portPattern.matcher(url);
+        m.find();
+        try{
             return Integer.valueOf(m.group(1));
+        }
+        catch(IllegalStateException e ) {
+            e.printStackTrace();
         }
         return 80;
     }
