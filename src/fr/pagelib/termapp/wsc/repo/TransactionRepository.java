@@ -33,11 +33,7 @@ public class TransactionRepository extends Repository{
             String url = configuration.getInvoicingEndpoint() + "/v1/transactions";
             JsonObject jsonPost = transaction.getJsonBuilder().build();
 
-            UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(getSession().getUserID(), getSession().getSessionID());
-
-            // TODO mettre une regex pour prenre ca de la config
-            HttpHost host = new HttpHost("localhost", 5000);
-            Executor executor = Executor.newInstance().auth(host, credentials).authPreemptive(host);
+            Executor executor = getExecutor(Configuration.getConfig().getInvoicingEndpoint());
 
             String rv = executor.execute(Request.Post(url)
                     .bodyString(jsonPost.toString(), ContentType.APPLICATION_JSON))
@@ -78,4 +74,6 @@ public class TransactionRepository extends Repository{
         }
         throw new InvoicingException();
     }
+
+
 }

@@ -4,6 +4,8 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonStructure;
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Configuration {
 
@@ -55,6 +57,23 @@ public class Configuration {
     }
 
     private Configuration() {}
+
+    public static String getHost(String url) {
+        // Q: Je me demande ce que c'est l'host dans preprod.pagelib.fr : pagelib ou preprod.pagelib
+        Pattern hostPattern = Pattern.compile("^[^.]+[/.](.+)[.:][^.]+$");
+        Matcher m = hostPattern.matcher(url);
+        m.find();
+        return m.group(1);
+    }
+    public static int getPort(String url) {
+        if (url.matches(":[0-9]+$")) {
+            Pattern portPattern = Pattern.compile(":([0-9]+)$");
+            Matcher m = portPattern.matcher(url);
+            m.find();
+            return Integer.valueOf(m.group(1));
+        }
+        return 80;
+    }
 
     public String getIamEndpoint() {
         return iamEndpoint;
