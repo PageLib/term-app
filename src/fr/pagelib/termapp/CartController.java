@@ -2,6 +2,7 @@ package fr.pagelib.termapp;
 
 import fr.pagelib.termapp.wsc.Configuration;
 import fr.pagelib.termapp.wsc.PrintingJob;
+import fr.pagelib.termapp.wsc.exc.InvoicingBalanceException;
 import fr.pagelib.termapp.wsc.exc.InvoicingException;
 import fr.pagelib.termapp.wsc.model.PrintingTransaction;
 import fr.pagelib.termapp.wsc.repo.TransactionRepository;
@@ -102,6 +103,10 @@ public class CartController extends PageController {
         try {
             transactionRepository.post(printingTransaction);
             mainController.showPage(MainController.Page.PRINTING);
+        }
+        catch (InvoicingBalanceException e) {
+            System.out.println("Insufficiant balance");
+            //TODO Handle the expression
         } catch (InvoicingException e) {
             e.printStackTrace();
         }

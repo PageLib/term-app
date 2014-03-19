@@ -3,6 +3,7 @@ package fr.pagelib.termapp.wsc.repo;
 
 import fr.pagelib.termapp.wsc.Configuration;
 import fr.pagelib.termapp.wsc.Session;
+import fr.pagelib.termapp.wsc.exc.InvoicingBalanceException;
 import fr.pagelib.termapp.wsc.exc.InvoicingException;
 import fr.pagelib.termapp.wsc.model.PrintingTransaction;
 import fr.pagelib.termapp.wsc.model.Transaction;
@@ -41,7 +42,6 @@ public class TransactionRepository extends Repository{
             JsonStructure rvJson = Json.createReader(new StringReader(rv)).read();
             JsonObject root = (JsonObject) rvJson;
             return TransactionRepository.buildTransaction(root);
-
         }
         catch (HttpResponseException e){
             if (e.getStatusCode() == 404){
@@ -55,6 +55,12 @@ public class TransactionRepository extends Repository{
     }
 
     public static Transaction buildTransaction(JsonObject json) throws InvoicingException {
+        if(json.keySet().contains("error")) {
+            if("insufficient_balance".equals(json.getString("error"))) {
+                throw new InvoicingBalanceException();
+            }
+        }
+
         String transactionType = json.getString("transaction_type");
         String datetimeStr = json.getString("date_time");
         Date datetime= javax.xml.bind.DatatypeConverter.parseDateTime(datetimeStr).getTime();
