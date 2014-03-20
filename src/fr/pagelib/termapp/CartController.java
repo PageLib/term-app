@@ -15,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -31,11 +33,14 @@ public class CartController extends PageController {
         HBox hbox = new HBox();
         Label label = new Label("(empty)");
         Pane pane = new Pane();
-        Button button = new Button("Supprimer");
+        ImageView iconRemove = (new ImageView(new Image(getClass().getResourceAsStream("icons/remove.png"),
+                10, 10, true, false)));
+        Button button = new Button();
         PrintingJob job;
 
         public PrintJobCell() {
             super();
+            button.setGraphic(iconRemove);
             hbox.getChildren().addAll(label, pane, button);
             HBox.setHgrow(pane, Priority.ALWAYS);
             button.setOnAction(new EventHandler<ActionEvent>() {

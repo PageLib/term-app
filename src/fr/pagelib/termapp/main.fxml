@@ -4,6 +4,7 @@
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.pagelib.termapp.MainController">
@@ -14,13 +15,18 @@
           <children>
 <HBox GridPane.rowSpan="2" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 <children>
-            <Button fx:id="backButton" minWidth="75.0" mnemonicParsing="false" onAction="#backAction" text="Retour" GridPane.columnIndex="1" GridPane.rowSpan="2" HBox.hgrow="NEVER">
+            <Button fx:id="backButton" minWidth="51.0" mnemonicParsing="false" onAction="#backAction" prefHeight="32.0" prefWidth="51.0" GridPane.columnIndex="1" GridPane.rowSpan="2" HBox.hgrow="NEVER">
 <GridPane.margin>
 <Insets left="15.0" />
 </GridPane.margin>
 <HBox.margin>
-<Insets right="15.0" top="10.0" />
-</HBox.margin></Button>
+<Insets right="15.0" />
+</HBox.margin>
+<graphic><ImageView fitHeight="39.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+<image>
+<Image url="@icons/back.png" />
+</image></ImageView>
+</graphic></Button>
             <Label fx:id="pageTitleLabel" maxWidth="1.7976931348623157E308" prefWidth="-1.0" styleClass="header-title" text="Titre de page" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.rowSpan="2" HBox.hgrow="ALWAYS">
 <GridPane.margin>
 <Insets left="15.0" />
