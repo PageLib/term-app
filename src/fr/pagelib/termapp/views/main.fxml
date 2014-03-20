@@ -24,7 +24,7 @@
 </HBox.margin>
 <graphic><ImageView fitHeight="39.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
 <image>
-<Image url="@icons/back.png" />
+<Image url="@../icons/back.png" />
 </image></ImageView>
 </graphic></Button>
             <Label fx:id="pageTitleLabel" maxWidth="1.7976931348623157E308" prefWidth="-1.0" styleClass="header-title" text="Titre de page" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.rowSpan="2" HBox.hgrow="ALWAYS">

@@ -16,7 +16,7 @@
 <graphic><HBox prefHeight="133.0" prefWidth="406.0">
 <children><ImageView fitHeight="115.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
 <image>
-<Image url="@icons/USB.png" />
+<Image url="@../icons/USB.png" />
 </image>
 <HBox.margin>
 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -31,7 +31,7 @@
 <graphic><HBox prefHeight="114.0" prefWidth="406.0">
 <children><ImageView fitHeight="115.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
 <image>
-<Image url="@icons/cloud.png" />
+<Image url="@../icons/cloud.png" />
 </image>
 <HBox.margin>
 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

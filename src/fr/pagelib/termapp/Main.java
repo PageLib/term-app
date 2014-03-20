@@ -33,7 +33,7 @@ public class Main extends Application {
             Platform.exit();
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("views/main.fxml"));
         AnchorPane root = (AnchorPane) loader.load();
         primaryStage.setTitle("PageLib terminal app");
         primaryStage.setScene(new Scene(root, 800, 600));
@@ -42,14 +42,14 @@ public class Main extends Application {
         this.mainController = loader.getController();
 
         // Load and set up pages
-        addPage(this.mainController.homePage, MainController.Page.HOME, "home.fxml");
-        addPage(this.mainController.loginPage, MainController.Page.LOGIN, "login.fxml");
-        addPage(this.mainController.sourcePage, MainController.Page.SOURCE, "source.fxml");
-        addPage(this.mainController.cloudDocumentPage, MainController.Page.CLOUD_DOCUMENT, "cloudDocument.fxml");
-        addPage(this.mainController.usbDocumentPage, MainController.Page.USB_DOCUMENT, "usbDocument.fxml");
-        addPage(this.mainController.jobSettingsPage, MainController.Page.JOB_SETTINGS, "jobSettings.fxml");
-        addPage(this.mainController.cartPage, MainController.Page.CART, "cart.fxml");
-        addPage(this.mainController.printingPage, MainController.Page.PRINTING, "printing.fxml");
+        addPage(this.mainController.homePage, MainController.Page.HOME, "views/home.fxml");
+        addPage(this.mainController.loginPage, MainController.Page.LOGIN, "views/login.fxml");
+        addPage(this.mainController.sourcePage, MainController.Page.SOURCE, "views/source.fxml");
+        addPage(this.mainController.cloudDocumentPage, MainController.Page.CLOUD_DOCUMENT, "views/cloudDocument.fxml");
+        addPage(this.mainController.usbDocumentPage, MainController.Page.USB_DOCUMENT, "views/usbDocument.fxml");
+        addPage(this.mainController.jobSettingsPage, MainController.Page.JOB_SETTINGS, "views/jobSettings.fxml");
+        addPage(this.mainController.cartPage, MainController.Page.CART, "views/cart.fxml");
+        addPage(this.mainController.printingPage, MainController.Page.PRINTING, "views/printing.fxml");
 
         // Set up the printer (will throw PrinterNotFoundException if no match)
         this.mainController.printingController.findPrinter(Configuration.getConfig().getPrinterNameRegex());
