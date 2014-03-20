@@ -15,6 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.*;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -90,7 +92,34 @@ public class CloudDocumentController extends PageController {
                 String id = document.getString("id");
                 String name = document.getString("name");
 
-                docList.add(new DocumentMetadata(name, "1 jour", id));
+                String dateJson = document.getString("date_time");
+                DateTime time = new DateTime(DateTime.parse(dateJson));
+                Duration duration = new Duration(time, DateTime.now());
+
+                // Choose the right unit to show the time
+                long timeShow = 0;
+                String unit = "";
+                if (duration.getStandardDays() > 0) {
+                    timeShow = duration.getStandardDays();
+                    unit = " jour";
+                }
+                else if (duration.getStandardHours() > 0) {
+                    timeShow = duration.getStandardHours();
+                    unit = " heure";
+                }
+                else if (duration.getStandardMinutes() > 0) {
+                    timeShow = duration.getStandardMinutes();
+                    unit = " minute";
+                }
+                else if (duration.getStandardSeconds() > 0) {
+                    timeShow = duration.getStandardSeconds();
+                    unit = " seconde";
+                }
+
+                // Set up plural
+                if(timeShow > 1) unit = String.format("%ss", unit);
+
+                docList.add(new DocumentMetadata(name, String.format("%d %s", timeShow, unit), id));
             }
         }
         catch (ClientProtocolException e) {
