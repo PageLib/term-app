@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class MainController {
@@ -39,6 +40,7 @@ public class MainController {
     public PrintingController printingController;
 
     private IAM iam;
+    private BigDecimal balance;
 
     enum Page {  // used for showPage() method
         HOME,
@@ -66,6 +68,7 @@ public class MainController {
     public void initialize () {
         // Ensures that the global VBox does not allow space for headerGrid when it is hidden
         headerGrid.managedProperty().bind(headerGrid.visibleProperty());
+        backButton.managedProperty().bind(backButton.visibleProperty());
         iam = new IAM();
 
         cartJobs = new ArrayList<PrintingJob>();
@@ -83,6 +86,7 @@ public class MainController {
             setCurrentUserName("");
             resetCartJobs();
             showPage(Page.HOME);
+            balance = BigDecimal.ZERO;
         }
     }
 
