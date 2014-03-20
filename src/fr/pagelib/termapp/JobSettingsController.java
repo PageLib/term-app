@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.embed.swing.SwingFXUtils;
 
+import javafx.scene.paint.Color;
 import org.icepdf.core.exceptions.PDFException;
 import org.icepdf.core.exceptions.PDFSecurityException;
 import org.icepdf.core.pobjects.Document;
@@ -35,6 +36,7 @@ public class JobSettingsController extends PageController {
 
     @FXML Label documentNameLabel;
     @FXML TextField pagesField;
+    @FXML Label pagePrintLabel;
     @FXML ToggleButton colorToggle;
     @FXML Label greyLevelsHintLabel;
     @FXML TextField copiesField;
@@ -86,16 +88,7 @@ public class JobSettingsController extends PageController {
             public void changed(ObservableValue<? extends Number> obs, Number oldValue, Number newValue) {
                 Integer p = (Integer) newValue;
 
-                // Navigation stuff
-                currentPageLabel.setText(String.format("%d / %d", p + 1, totalPages));
-                previousPageButton.setDisable(p == 0);
-                nextPageButton.setDisable(p == totalPages - 1);
-
-                // Show selected page
-                BufferedImage awtImage = (BufferedImage) pdfDocument.getPageImage(
-                        p, GraphicsRenderingHints.PRINT, Page.BOUNDARY_CROPBOX, 0.0f, 1.0f);
-                Image fxImage = SwingFXUtils.toFXImage(awtImage, null);
-                pdfImageView.setImage(fxImage);
+                refreshPageView(p);
             }
         });
         // restrict the key input to the selected characters
@@ -112,12 +105,19 @@ public class JobSettingsController extends PageController {
             public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
                 // Disable the select button if the pageRange has bot the good look
                 okButton.setDisable(false);
+                String infoPage = "Exemple: 1, 2, 4-6 imprimera les pages 1 et 2 et de la page 4 à 6.";
+                pagePrintLabel.getStyleClass().clear();
                 try{
                     printingJob.setPages(generatePageRange(s2));
                     updatePrice();
+                    pagePrintLabel.setText(infoPage);
+                    pagePrintLabel.getStyleClass().add("hint-label");
                 }
                 catch (IllegalArgumentException | NullPointerException e){
                     okButton.setDisable(true);
+                    String errorMessage = "\nLes pages à imprimer ne sont pas correctes.";
+                    pagePrintLabel.setText(infoPage + errorMessage);
+                    pagePrintLabel.getStyleClass().add("error-label");
                 }
             }
         });
@@ -150,9 +150,6 @@ public class JobSettingsController extends PageController {
         NumberFormat euroFormat = NumberFormat.getCurrencyInstance(Locale.FRANCE);
         euroFormat.setMaximumFractionDigits(2);
         euroFormat.setMinimumFractionDigits(2);
-      //  int coma = price.indexOf(".");
-    //    price = price.substring(0, Math.min(coma+2, price.length())) + " €";
-  //      price.replace(",", ".");
         priceLabel.setText(euroFormat.format(price));
     }
 
@@ -172,6 +169,19 @@ public class JobSettingsController extends PageController {
             }
         }
         return pageRanges;
+    }
+
+    public void refreshPageView(int page) {
+        // Navigation stuff
+        currentPageLabel.setText(String.format("%d / %d", page + 1, totalPages));
+        previousPageButton.setDisable(page == 0);
+        nextPageButton.setDisable(page == totalPages - 1);
+
+        // Show selected page
+        BufferedImage awtImage = (BufferedImage) pdfDocument.getPageImage(
+                page, GraphicsRenderingHints.PRINT, Page.BOUNDARY_CROPBOX, 0.0f, 1.0f);
+        Image fxImage = SwingFXUtils.toFXImage(awtImage, null);
+        pdfImageView.setImage(fxImage);
     }
 
     public void reset() {
@@ -197,6 +207,7 @@ public class JobSettingsController extends PageController {
 
             totalPages = pdfDocument.getNumberOfPages();
             currentPage.set(0);
+            refreshPageView(0);
 
             System.out.println(String.format("PDF document loaded, %d pages", totalPages));
         }
