@@ -18,10 +18,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-
+        // Load configuration
         try {
-            // TODO: allow the file name to be set via a CLI argument or an environment variable
-            Configuration.setConfig("config.json");
+            String configPath = System.getenv("PAGELIB_TERMAPP_CONFIG");
+            if (configPath == null) configPath = "config.json";
+            System.out.println("Loading configuration from file " + configPath);
+            Configuration.setConfig(configPath);
         }
         catch (FileNotFoundException e) {
             System.err.println("Unable to find configuration file.");

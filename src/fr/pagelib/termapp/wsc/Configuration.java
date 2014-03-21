@@ -32,13 +32,8 @@ public class Configuration {
 
     private static Configuration buildFromFile(String configPath) throws IOException {
 
-        // Compute the absolute path corresponding to configPath (relative to the current working directory)
-        String cwdPath = new File(".").getAbsolutePath();
-        if (cwdPath.length() > 1) cwdPath = cwdPath.substring(0, cwdPath.length() - 1);
-        String absolutePath = cwdPath + configPath;
-
         // Parse JSON and build the Configuration
-        JsonStructure rvJson = Json.createReader(new FileReader(absolutePath)).read();
+        JsonStructure rvJson = Json.createReader(new FileReader(configPath)).read();
         JsonObject root = (JsonObject) rvJson;
 
         Configuration config = new Configuration();
