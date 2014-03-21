@@ -55,7 +55,7 @@ public class Configuration {
 
     public static String getHost(String url) {
         // Q: Je me demande ce que c'est l'host dans preprod.pagelib.fr : pagelib ou preprod.pagelib
-        Pattern hostPattern = Pattern.compile("^[^.]+[/.](.+)[.:][^.]+$");
+        Pattern hostPattern = Pattern.compile("http://([a-zA-Z0-9\\.\\-]+)");
         Matcher m = hostPattern.matcher(url);
         m.find();
         return m.group(1);
@@ -68,9 +68,8 @@ public class Configuration {
             return Integer.valueOf(m.group(1));
         }
         catch(IllegalStateException e ) {
-            e.printStackTrace();
+            return 80;
         }
-        return 80;
     }
 
     public String getIamEndpoint() {
