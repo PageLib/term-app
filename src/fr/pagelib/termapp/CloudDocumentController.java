@@ -13,6 +13,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.*;
 import org.joda.time.DateTime;
@@ -40,6 +42,9 @@ public class CloudDocumentController extends PageController {
         nameColumn.setCellValueFactory(new PropertyValueFactory<DocumentMetadata, String>("name"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<DocumentMetadata, String>("date"));
         table.setItems(docList);
+        Text emptyTableMessage = new Text("Vous n'avez envoyé aucun document.\nVous pouvez en envoyer sur www.pagelib.fr");
+        emptyTableMessage.setTextAlignment(TextAlignment.CENTER);
+        table.setPlaceholder(emptyTableMessage);
 
         table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DocumentMetadata>() {
 
@@ -56,7 +61,7 @@ public class CloudDocumentController extends PageController {
                         byte[] rv = Request.Get(url).execute().returnContent().asBytes();
 
                         // Store them into a temporary file
-                        String path =  Configuration.getConfig().getPdfPath()
+                        String path = Configuration.getConfig().getPdfPath()
                                 + File.separator + newValue.getId() + ".pdf";
                         FileOutputStream fos = new FileOutputStream(path);
                         fos.write(rv);
@@ -65,8 +70,7 @@ public class CloudDocumentController extends PageController {
                         mainController.setCurrentDocumentPath(path);
                         mainController.setCurrentDocumentMetadata(newValue);
                         mainController.showPage(MainController.Page.JOB_SETTINGS);
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
